@@ -55,11 +55,11 @@ class ScreenTyping : MonoBehaviour
 		textGenerator.Populate(typed.text.Substring(0, typed.selectionAnchorPosition), settings);
 		var typedLinesCount = textGenerator.lineCount;
 
-		if (typedLinesCount >= 6)
+		if (typedLinesCount >= 5)
 		{
 			textGenerator.Populate(referenceText, settings);
 
-			int firstLine = Mathf.Clamp(typedLinesCount - 5, 0, textGenerator.lineCount - 1);
+			int firstLine = Mathf.Clamp(typedLinesCount - 4, 0, textGenerator.lineCount - 1);
 			Reference.text = referenceText.Substring(textGenerator.lines[firstLine].startCharIdx);
 		}
 		else
