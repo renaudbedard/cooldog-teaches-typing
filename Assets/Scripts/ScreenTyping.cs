@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Text;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -13,6 +14,9 @@ class ScreenTyping : MonoBehaviour
 	StringBuilder cleaner = new StringBuilder();
 
 	string referenceText;
+	UILineInfo[] referenceTextLineInfo;
+	string[] referenceTextLines;
+
 	public Text Reference;
 
 	InputField typed;
@@ -52,24 +56,37 @@ class ScreenTyping : MonoBehaviour
 
 		// detect scrolling and move reference text view accordingly
 
-		textGenerator.Populate(typed.text.Substring(0, typed.selectionAnchorPosition), settings);
+		//textGenerator.Populate(typed.text.Substring(0, typed.selectionAnchorPosition), settings);
+		textGenerator.Populate(typed.text, settings);
+
 		var typedLinesCount = textGenerator.lineCount;
 
 		if (typedLinesCount >= 5)
 		{
-			textGenerator.Populate(referenceText, settings);
-
-			int firstLine = Mathf.Clamp(typedLinesCount - 4, 0, textGenerator.lineCount - 1);
-			Reference.text = referenceText.Substring(textGenerator.lines[firstLine].startCharIdx);
+			int firstLine = Mathf.Clamp(typedLinesCount - 4, 0, referenceTextLineInfo.Length - 1);
+			Reference.text = referenceText.Substring(referenceTextLineInfo[firstLine].startCharIdx);
 		}
 		else
 			Reference.text = referenceText;
 	}
 
-	public void LoadLesson(string name)
+	public void LoadLesson(string title)
 	{
-		var lessonText = Resources.Load<TextAsset>(name);
+		var lessonText = Resources.Load<TextAsset>(title);
 		referenceText = Reference.text = lessonText.text;
+
+		textGenerator.Populate(referenceText, settings);
+		referenceTextLineInfo = textGenerator.lines.ToArray();
+
+		referenceTextLines = new string[referenceTextLineInfo.Length];
+		for (int i = 0; i < referenceTextLineInfo.Length; i++)
+		{
+			int nextLineStart = i == referenceTextLineInfo.Length - 1
+				                    ? referenceText.Length
+				                    : referenceTextLineInfo[i + 1].startCharIdx;
+			var thisLineStart = referenceTextLineInfo[i].startCharIdx;
+			referenceTextLines[i] = referenceText.Substring(thisLineStart, nextLineStart - thisLineStart);
+		}
 	}
 
 	public void OnValueChanged(string value)
@@ -80,29 +97,31 @@ class ScreenTyping : MonoBehaviour
 			return;
 		}
 
-		// clean up value
-		if (value.EndsWith("/color", StringComparison.InvariantCulture))
+		// clean up value ending (if need be)
+		if (value.TrimEnd().EndsWith("/color", StringComparison.InvariantCulture))
 			value = value.Substring(0, value.LastIndexOf("<color", StringComparison.InvariantCulture));
 
-		cleaner.Remove(0, cleaner.Length);
-		cleaner.Append(value);
-		cleaner.Replace("<color=red>", "");
-		cleaner.Replace("</color>", "");
-		value = cleaner.ToString();
-			
+		// split lines
+		textGenerator.Populate(value, settings);
+		var typedLineInfo = textGenerator.lines;
+		var typedLines = new string[typedLineInfo.Count];
+		for (int i = 0; i < typedLines.Length; i++)
+		{
+			int nextLineStart = i == typedLineInfo.Count - 1
+									? value.Length
+									: typedLineInfo[i + 1].startCharIdx;
+			var thisLineStart = typedLineInfo[i].startCharIdx;
+			typedLines[i] = value.Substring(thisLineStart, nextLineStart - thisLineStart).Replace("\n", string.Empty);
+		}
+
 		// clear
 		builder.Remove(0, builder.Length);
 
 		bool inBracket = false;
-
-		// per line
-		var lines = value.Split('\n');
-		var referenceLines = referenceText.Split('\n');
-
-		for (int l = 0; l < lines.Length; l++)
+		for (int l = 0; l < typedLines.Length; l++)
 		{
-			var line = lines[l];
-			var referenceLine = l < referenceLines.Length ? referenceLines[l] : null;
+			var line = typedLines[l];
+			var referenceLine = l < referenceTextLines.Length ? referenceTextLines[l] : null;
 			int position = 0;
 
 			for (int i = 0; i < line.Length; i++)
@@ -128,14 +147,14 @@ class ScreenTyping : MonoBehaviour
 				position++;
 			}
 
-			if (l != lines.Length - 1)
+			if (l != typedLines.Length - 1)
 				builder.Append('\n');
 		}
 
 		ignoreNextEvent = true;
-
 		//var lastTyped = typed.text;
 		typed.text = builder.ToString();
+		ignoreNextEvent = false;
 
 		typed.caretPosition = typed.text.Length;
 
