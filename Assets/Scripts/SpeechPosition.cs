@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System;
 
@@ -11,6 +12,7 @@ class RectTransformValues
 	public Vector2 OffsetMax;
 	public Vector2 AnchorMin;
 	public Vector2 AnchorMax;
+	public TextAnchor ChildAlignment;
 	public float TransitionDuration;
 }
 
@@ -19,6 +21,7 @@ public class SpeechPosition : MonoBehaviour {
 
 	[SerializeField] CameraAnimator MainCamera;
 	[SerializeField] RectTransformValues[] Viewpoints;
+	[SerializeField] HorizontalLayoutGroup m_HorizontalLayoutGroup;
 	RectTransform m_RectTransform;
 	int CurrentViewpoint = 0;
 	float transitionDuration = 1f;
@@ -48,6 +51,8 @@ public class SpeechPosition : MonoBehaviour {
 			originOffsetMin = m_RectTransform.offsetMin;
 			originAnchorMax = m_RectTransform.anchorMax;
 			originAnchorMin = m_RectTransform.anchorMin;
+
+			m_HorizontalLayoutGroup.childAlignment = Viewpoints[CurrentViewpoint].ChildAlignment;
 		}
 
 		float step = Mathf.Clamp01(sinceTransitionStarted / transitionDuration);
@@ -57,10 +62,12 @@ public class SpeechPosition : MonoBehaviour {
 		} else {
 			sinceTransitionStarted = transitionDuration;
 		}
+
+
 	
-		m_RectTransform.offsetMax = Vector2.Lerp(originOffsetMax, Viewpoints[CurrentViewpoint].OffsetMax, step);
-		m_RectTransform.offsetMin = Vector2.Lerp(originOffsetMin, Viewpoints[CurrentViewpoint].OffsetMin, step);
-		m_RectTransform.anchorMax = Vector2.Lerp(originAnchorMax, Viewpoints[CurrentViewpoint].AnchorMax, step);
-		m_RectTransform.anchorMin = Vector2.Lerp(originAnchorMin, Viewpoints[CurrentViewpoint].AnchorMin, step);
+		m_RectTransform.offsetMax = Viewpoints[CurrentViewpoint].OffsetMax;
+		m_RectTransform.offsetMin = Viewpoints[CurrentViewpoint].OffsetMin;
+		m_RectTransform.anchorMax = Viewpoints[CurrentViewpoint].AnchorMax;
+		m_RectTransform.anchorMin = Viewpoints[CurrentViewpoint].AnchorMin;
 	}
 }
