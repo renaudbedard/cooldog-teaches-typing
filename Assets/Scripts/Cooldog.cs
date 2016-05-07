@@ -299,6 +299,21 @@ public class Cooldog : MonoBehaviour
 		}
 	}
 
+	readonly AnimatedSprite[] ReliefFace = new[] { new AnimatedSprite { Frame = "TongueOut" } };
+	readonly AnimatedSprite[] HeartEyes = new[] { new AnimatedSprite { Frame = "Heart" } };
+	public void SetScratching(bool value, bool heartEyes)
+	{
+		if (value)
+			Face.SetAnimation(ReliefFace);
+		else
+			Face.SetAnimation(CurrentSet.Face ?? Costumes["Normal"].Face);
+
+		if (heartEyes)
+			Eyes.SetAnimation(HeartEyes);
+		else
+			Eyes.SetAnimation(CurrentSet.Face ?? Costumes["Normal"].Eyes);
+	}
+
 	void ApplyCostume()
 	{
 		var normal = Costumes["Normal"];
