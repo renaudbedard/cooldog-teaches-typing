@@ -215,6 +215,8 @@ public class Cooldog : MonoBehaviour
 		Overlay = GameObject.Find("Overlay").GetComponent<DogPart>();
 		OtherOverlay = GameObject.Find("OtherOverlay").GetComponent<DogPart>();
 
+		Flipped = true;
+
 		ApplyCostume();
 	}
 
