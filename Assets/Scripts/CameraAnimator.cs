@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 [Serializable]
 class Viewpoint
@@ -54,6 +56,11 @@ class CameraAnimator : MonoBehaviour
 
 			originPosition = transform.position;
 			originRotation = transform.rotation;
+
+			if (CurrentViewpoint == Viewpoints.Length - 1)
+				ScreenTyping.Instance.GetComponentInChildren<InputField>().Select();
+			if (CurrentViewpoint == 1)
+				EventSystem.current.SetSelectedGameObject(null);
 		}
 
 		float step = Mathf.Clamp01(sinceTransitionStarted / transitionDuration);

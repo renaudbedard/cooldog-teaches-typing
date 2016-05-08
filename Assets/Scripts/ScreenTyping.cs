@@ -7,6 +7,8 @@ using UnityEngine.UI;
 
 class ScreenTyping : MonoBehaviour
 {
+	public static ScreenTyping Instance;
+
 	TextGenerator textGenerator;
 	TextGenerationSettings settings;
 
@@ -29,6 +31,11 @@ class ScreenTyping : MonoBehaviour
 
 	int lastUsedSpeaker;
 	AudioSource[] speakers;
+
+	void Awake()
+	{
+		Instance = this;
+	}
 
 	void Start()
 	{
