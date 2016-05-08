@@ -7,11 +7,14 @@ public class GameState : MonoBehaviour {
 	public static GameState Instance;
 
 	IntroScene m_Intro;
-	[SerializeField] float TitleFadeTime = 2.2f;
+	IEnumerator IntroRoutine;
+	IEnumerator IntroTransition;
+	[SerializeField] float TitleFadeTime = 1.8f;
 	[SerializeField] CanvasRenderer[] Renderers;
 	
 	public PipAnimator m_CooldogPip;
 	public CameraAnimator m_CamAnimator;
+	public GameObject m_UILayer;
 
 	void Awake() {
 		Instance = this;
@@ -37,10 +40,19 @@ public class GameState : MonoBehaviour {
 			}
 			break;
 		case 1:
-			StartCoroutine(StateOneTransition());
+			IntroTransition = StateOneTransition();
+			StartCoroutine(IntroTransition);
 			CurrentState = 2;
 			break;
 		case 2:
+			// Skip intro on keypress ~
+			if (Input.GetKeyDown(KeyCode.BackQuote)) {
+				StopCoroutine(IntroTransition);
+				SetIntroRenderersAlpha( 0f );
+				if (IntroRoutine != null)
+					StopCoroutine( IntroRoutine );
+				CurrentState = 3;
+			}
 			break;
 		default:
 			if (Input.GetKeyDown("up"))
@@ -51,19 +63,23 @@ public class GameState : MonoBehaviour {
 		}
 	}
 
+	void SetIntroRenderersAlpha(float alpha) {
+		foreach (CanvasRenderer c in Renderers) {
+			c.SetAlpha(alpha);
+		}
+	}
+
 	IEnumerator StateOneTransition() {
 		float fadeEndTime = Time.fixedTime + TitleFadeTime;
 		float alpha = 1;
 		while (Time.fixedTime < fadeEndTime) {
-			foreach (CanvasRenderer c in Renderers) {
-				alpha = Mathf.Clamp01( 1f - (Time.fixedTime - fadeEndTime + TitleFadeTime) / TitleFadeTime );
-				c.SetAlpha(alpha);
-			}
+			SetIntroRenderersAlpha(Mathf.Clamp01( 1f - (Time.fixedTime - fadeEndTime + TitleFadeTime) / TitleFadeTime ));
 			yield return false;
 		}
 
 		m_Intro = new IntroScene();
-		yield return StartCoroutine( m_Intro.Play() );
+		IntroRoutine =  m_Intro.Play();
+		yield return StartCoroutine( IntroRoutine );
 		CurrentState = 3;
 	}
 }

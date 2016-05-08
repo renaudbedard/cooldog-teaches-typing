@@ -99,6 +99,7 @@ MonoBehaviour:
   - {fileID: 0}
   m_CooldogPip: {fileID: 0}
   m_CamAnimator: {fileID: 11476654}
+  m_UILayer: {fileID: 0}
   CurrentState: 0
 --- !u!114 &11476654
 MonoBehaviour:

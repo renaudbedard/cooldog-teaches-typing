@@ -6,13 +6,15 @@ public class IntroScene {
 	Cooldog m_Cooldog;
 	DogBarker m_DogBarker;
 	PipAnimator m_CoolPip;
-	public CameraAnimator m_CameraAnim;
+	CameraAnimator m_CameraAnim;
+	GameObject m_UILayer;
 
 	public IntroScene() {
 		m_Cooldog = Cooldog.Instance;
 		m_DogBarker = m_Cooldog.GetComponent<DogBarker>();
 		m_CoolPip = GameState.Instance.m_CooldogPip;
 		m_CameraAnim = GameState.Instance.m_CamAnimator;
+		m_UILayer = GameState.Instance.m_UILayer;
 	}
 
 	public IEnumerator Play() {
