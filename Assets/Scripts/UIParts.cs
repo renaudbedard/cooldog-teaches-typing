@@ -8,6 +8,7 @@ public class UIParts : MonoBehaviour {
 	public RectTransform m_UsernameContainer;
 	public RectTransform m_CounterContainer;
 	public Image m_CounterFill;
+	public CanvasRenderer m_PressStart;
 
 	Vector2 TargetCounterContainerPosition;
 	Vector2 OffScreenCounterContainerPosition;

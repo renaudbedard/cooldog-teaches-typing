@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 [Serializable]
 public class Lesson
@@ -75,8 +76,14 @@ public class GameState : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (Input.GetKeyDown(KeyCode.R) && Input.GetKey(KeyCode.LeftControl)) {
+			int scene = SceneManager.GetActiveScene().buildIndex;
+			SceneManager.LoadScene(scene, LoadSceneMode.Single);
+			CurrentState = 0;
+		}
 		switch(CurrentState) {
 		case 0:
+			m_UILayer.m_PressStart.SetAlpha((int)Time.time % 2);
 			if (Input.anyKeyDown && !Input.GetMouseButton(0) && !Input.GetMouseButton(1)) {
 				ScreenTyping.Instance.PlayTypingSound(true);
 				CurrentState = 1;

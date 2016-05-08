@@ -322,14 +322,14 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 11449000, guid: 8700a87ca1c42479d8a34dfe17968368, type: 2}
-      propertyPath: m_CameraAnimator
-      value: 
-      objectReference: {fileID: 2137865672}
     - target: {fileID: 11416454, guid: 8700a87ca1c42479d8a34dfe17968368, type: 2}
       propertyPath: m_RenderCam
       value: 
       objectReference: {fileID: 127657123}
+    - target: {fileID: 11449000, guid: 8700a87ca1c42479d8a34dfe17968368, type: 2}
+      propertyPath: m_CameraAnimator
+      value: 
+      objectReference: {fileID: 2137865672}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8700a87ca1c42479d8a34dfe17968368, type: 2}
   m_IsPrefabParent: 0

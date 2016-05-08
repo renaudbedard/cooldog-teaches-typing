@@ -212,7 +212,6 @@ GameObject:
   - 224: {fileID: 22479392}
   - 222: {fileID: 22233050}
   - 114: {fileID: 11414478}
-  - 114: {fileID: 11497080}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -382,6 +381,7 @@ MonoBehaviour:
   m_UsernameContainer: {fileID: 22427546}
   m_CounterContainer: {fileID: 22462410}
   m_CounterFill: {fileID: 11439110}
+  m_PressStart: {fileID: 22233050}
 --- !u!114 &11403942
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -892,17 +892,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &11497080
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 174958}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b86e4af883fb4560b2d740418229ed6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &11499236
 MonoBehaviour:
   m_ObjectHideFlags: 1
