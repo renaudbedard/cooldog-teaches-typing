@@ -211,7 +211,7 @@ public class Cooldog : MonoBehaviour
 
 	public bool Blinking { get; private set; }
 
-	IEnumerator Start(){
+	void Start(){
 		CurrentSet = Costumes["Normal"];
 
 		Body = GameObject.Find("Body").GetComponent<DogPart>();
@@ -226,12 +226,6 @@ public class Cooldog : MonoBehaviour
 		Flipped = true;
 
 		ApplyCostume();
-
-		yield return new WaitForSeconds(5f);
-
-		yield return StartCoroutine(ChangeCostume("Batman"));
-		yield return StartCoroutine(ChangeCostume("Quiz"));
-		yield return StartCoroutine(ChangeCostume("Music"));
 	}
 
 	public IEnumerator ChangeCostume(string costume) 
