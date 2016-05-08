@@ -10,9 +10,14 @@ public class IntroScene {
 	CameraAnimator m_CameraAnim;
 	UIParts m_UILayer;
 
-	Transform usernameContainer;
+	// Input Username Parts
+	RectTransform usernameContainer;
 	Text usernameText;
-	GameObject somethingElse;
+
+	// Counter Parts
+	RectTransform counterContainer;
+	Text counterText;
+	Image counterFill;
 
 	public IntroScene() {
 		m_Cooldog = Cooldog.Instance;
@@ -23,6 +28,10 @@ public class IntroScene {
 
 		usernameContainer = m_UILayer.m_UsernameContainer;
 		usernameText = usernameContainer.GetComponentInChildren<Text>();
+
+		counterContainer = m_UILayer.m_CounterContainer;
+		counterText = counterContainer.GetComponentInChildren<Text>();
+		counterFill = GameState.Instance.m_UILayer.m_CounterFill;
 	}
 
 
@@ -32,6 +41,21 @@ public class IntroScene {
 			if (Input.anyKeyDown) {
 				usernameText.text += (char)('A' + Random.Range (0,58));
 			}
+			yield return false;
+		}
+	}
+
+	public IEnumerator TypingPerMinute(float time) {
+		float startTime = Time.time;
+		float endTime = Time.time + time;
+		int keysPressed = 1;
+		while (endTime > Time.time) {
+			counterFill.fillAmount = 1f - ((Time.time - startTime) / time);
+
+			keysPressed += Input.inputString.Length;
+
+			counterText.text = (keysPressed).ToString();
+
 			yield return false;
 		}
 	}
@@ -61,36 +85,44 @@ public class IntroScene {
 		usernameContainer.gameObject.SetActive(false);
 
 		yield return m_DogBarker.Play(0f, new string[] {
-			"lets instead check how fast you can keyboard",
+			"lets instead check how fast you can keyboard"
+		});
+
+		counterContainer.gameObject.SetActive(true);
+		yield return m_UILayer.StartCoroutine(m_UILayer.ToggleCounter(true));
+
+		yield return m_DogBarker.Play(0f, new string[] {
 			"your typing per second will show up here"
 		});
 
-		// Show huge number
-		yield return new WaitForSeconds(0.2f);
+		yield return new WaitForSeconds(1f);
+		counterText.text = "0";
 
 		yield return m_DogBarker.Play(0f, new string[] {
 			"ready.",
 			"go."
 		});
 
-		// 5 seconds of input.
-		yield return new WaitForSeconds(5f);
+		yield return TypingPerMinute(5f);
 
 		yield return m_DogBarker.Play(0f, new string[] {
 			"and stop.",
 		});
 
-		//hide ui stuff
+		yield return m_DogBarker.Play(0f, new string[] {
+			"okay " + ((Random.Range(0f,1f) > 0.5f) ? "good" : "bad") + ". you scored " + counterText.text + " typing.",
+			"we’ll start with that and check to see how much better youve gotten later."
+		});
+
+		m_UILayer.StartCoroutine(m_UILayer.ToggleCounter(false));
 
 		yield return m_DogBarker.Play(0f, new string[] {
-			"okay " + ((Random.Range(0f,1f) > 0.5f) ? "good" : "bad") + ". you scored " + 5 + " typing.",
-			"we’ll start with that and check to see how much better youve gotten later.",
 			"lets head over to the main menu\b\b\b\b\b\b\b\b\bmy office"
 		});
 
 		m_CoolPip.TogglePip(false);
 		m_CameraAnim.CurrentViewpoint = 2;
-		yield return new WaitForSeconds(0.3f);
+		yield return new WaitForSeconds(0.7f);
 		m_CoolPip.ToggleBigdog(false);
 
 		yield return m_DogBarker.Play(0f, new string[] {
