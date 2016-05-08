@@ -58,7 +58,12 @@ class CameraAnimator : MonoBehaviour
 			originRotation = transform.rotation;
 
 			if (CurrentViewpoint == Viewpoints.Length - 1)
-				ScreenTyping.Instance.GetComponentInChildren<InputField>().Select();
+			{
+				if (!ScreenTyping.Instance.BootedUp)
+					StartCoroutine(ScreenTyping.Instance.BootUp());
+				else
+					ScreenTyping.Instance.GetComponentInChildren<InputField>().Select();
+			}
 			if (CurrentViewpoint == 1)
 				EventSystem.current.SetSelectedGameObject(null);
 		}

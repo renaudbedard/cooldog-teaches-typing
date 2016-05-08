@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Linq;
 using System.Text;
 using UnityEngine;
@@ -22,6 +23,7 @@ class ScreenTyping : MonoBehaviour
 	string[] referenceTextLines;
 
 	public Text Reference;
+	public Image LoadingScreen;
 
 	InputField typed;
 	bool ignoreNextEvent;
@@ -34,6 +36,8 @@ class ScreenTyping : MonoBehaviour
 
 	public AudioClip[] TypingSounds;
 	public AudioClip[] AltTypingSounds;
+
+	public AudioClip TeachesTyping;
 
 	int lastUsedSpeaker;
 	AudioSource[] speakers;
@@ -72,8 +76,41 @@ class ScreenTyping : MonoBehaviour
 			var filter = go.AddComponent<AudioReverbFilter>();
 			filter.reverbLevel = -4000;
 		}
+	}
+
+	public bool BootedUp;
+	public IEnumerator BootUp()
+	{
+		yield return new WaitForSeconds(1.0f);
+
+		var c = LoadingScreen.color;
+
+		LoadingScreen.color = new Color(c.r * 0.25f, c.g * 0.25f, c.b, 0.25f);
+		yield return new WaitForSeconds(0.25f);
+		LoadingScreen.color = new Color(c.r * 0.5f, c.g * 0.5f, c.b, 0.5f);
+		yield return new WaitForSeconds(0.25f);
+		LoadingScreen.color = new Color(c.r * 0.75f, c.g * 0.75f, c.b, 0.75f);
+		yield return new WaitForSeconds(0.25f);
+		LoadingScreen.color = new Color(c.r, c.g, c.b, 1.0f);
+
+		speakers[lastUsedSpeaker].PlayOneShot(TeachesTyping);
+		lastUsedSpeaker = (lastUsedSpeaker + 1) % speakers.Length;
+
+		yield return new WaitForSeconds(2.0f);
+
+		LoadingScreen.color = new Color(LoadingScreen.color.r, LoadingScreen.color.g, LoadingScreen.color.b, 0.75f);
+		yield return new WaitForSeconds(0.25f);
+		LoadingScreen.color = new Color(LoadingScreen.color.r, LoadingScreen.color.g, LoadingScreen.color.b, 0.5f);
+		yield return new WaitForSeconds(0.25f);
+		LoadingScreen.color = new Color(LoadingScreen.color.r, LoadingScreen.color.g, LoadingScreen.color.b, 0.25f);
+		yield return new WaitForSeconds(0.25f);
+		LoadingScreen.color = new Color(LoadingScreen.color.r, LoadingScreen.color.g, LoadingScreen.color.b, 0f);
+		yield return new WaitForSeconds(1.0f);
+
+		BootedUp = true;
 
 		LoadLesson("lesson1");
+		GetComponentInChildren<InputField>().Select();
 	}
 
 	void Update()
