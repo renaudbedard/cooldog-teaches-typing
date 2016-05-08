@@ -43,8 +43,9 @@ public class GameState : MonoBehaviour {
 	}
 
 	// Use this for initialization
-	void Start () {
-	
+	void Start ()
+	{
+		ScreenTyping.Instance.NextLesson = Lessons[0].Path;
 	}
 	
 	// Update is called once per frame
