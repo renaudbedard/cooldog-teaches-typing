@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
@@ -45,6 +46,8 @@ class ScreenTyping : MonoBehaviour
 	AudioSource[] speakers;
 
 	public string NextLesson;
+
+	HashSet<string> seenWords = new HashSet<string>();
 
 	void Awake()
 	{
@@ -147,6 +150,8 @@ class ScreenTyping : MonoBehaviour
 
 	public void LoadLesson(string title)
 	{
+		seenWords.Clear();
+
 		var lessonText = Resources.Load<TextAsset>(title);
 		referenceText = Reference.text = lessonText.text;
 
@@ -246,6 +251,28 @@ class ScreenTyping : MonoBehaviour
 				// apppend lf if last character is a space and the above line
 				if (referenceLine != null && builder.Length > 0 && char.IsWhiteSpace(builder[builder.Length - 1]) && position >= referenceLine.Length && !Input.GetKey(KeyCode.Backspace))
 					builder.Append('\n');
+			}
+		}
+
+		if (char.IsWhiteSpace(lastChar))
+		{
+			// check for known costumes
+			var trimmed = value.TrimEnd();
+			var lastSpace = trimmed.LastIndexOf(' ');
+			var lastLF = trimmed.LastIndexOf('\n');
+			var lastWord = trimmed.Substring(Math.Max(Math.Max(lastSpace, lastLF), 0)).ToLower().Trim();
+
+			//Debug.Log("Last word : " + lastWord);
+
+			foreach (var key in Cooldog.Instance.Costumes.Keys)
+			{
+				var lowerKey = key.ToLower();
+				if (lowerKey == lastWord && !seenWords.Contains(lastWord))
+				{
+					seenWords.Add(lastWord);
+					//Debug.Log("Changing costume to : " + lastWord);
+					StartCoroutine(Cooldog.Instance.ChangeCostume(key));
+				}
 			}
 		}
 
