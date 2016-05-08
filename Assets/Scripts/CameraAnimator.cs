@@ -8,7 +8,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 [Serializable]
-class Viewpoint
+public class Viewpoint
 {
 	public string Name;
 	public Vector3 Position;
@@ -16,7 +16,7 @@ class Viewpoint
 	public float TransitionDuration;
 }
 
-class CameraAnimator : MonoBehaviour
+public class CameraAnimator : MonoBehaviour
 {
 	Vector3 originPosition;
 	Quaternion originRotation;
@@ -80,10 +80,5 @@ class CameraAnimator : MonoBehaviour
 
 		transform.position = Vector3.Lerp(transform.position, destinationPosition, 1 - Mathf.Pow(0.005f, Time.deltaTime));
 		transform.rotation = Quaternion.Slerp(transform.rotation, destinationRotation, 1 - Mathf.Pow(0.005f, Time.deltaTime));
-
-		if (Input.GetKeyDown("up"))
-			CurrentViewpoint = Mathf.Max(CurrentViewpoint - 1, 0);
-		if (Input.GetKeyDown("down"))
-			CurrentViewpoint = Mathf.Min(CurrentViewpoint + 1, Viewpoints.Length - 1);
 	}
 }
