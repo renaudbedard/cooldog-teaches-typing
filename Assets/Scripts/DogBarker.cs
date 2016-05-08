@@ -34,8 +34,8 @@ public class DogBarker : MonoBehaviour {
 		talkingSpeaker = GetComponent<AudioSource>();
 		cooldog = GetComponent<Cooldog>();
 
-		//talkingSpeaker.clip = coolBark[Random.Range(0, coolBark.Length)];
-		//talkingSpeaker.Play();
+		talkingSpeaker.clip = coolBark[Random.Range(0, coolBark.Length)];
+		talkingSpeaker.Play();
 
 		Play(2f, new string[] {"hey man", "welcome to cooldog teaches typing"});
 	}
@@ -71,8 +71,8 @@ public class DogBarker : MonoBehaviour {
 					cooldog.CloseMouth();
 				}
 				if (".aeiou?!1".Contains(letter.ToString())) {
-					//talkingSpeaker.clip = coolBark[Random.Range(0, coolBark.Length)];
-					//talkingSpeaker.Play();
+					talkingSpeaker.clip = coolBark[Random.Range(0, coolBark.Length)];
+					talkingSpeaker.Play();
 
 					cooldog.OpenMouth();
 				}
