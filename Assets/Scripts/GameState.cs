@@ -14,7 +14,7 @@ public class GameState : MonoBehaviour {
 	
 	public PipAnimator m_CooldogPip;
 	public CameraAnimator m_CamAnimator;
-	public GameObject m_UILayer;
+	public UIParts m_UILayer;
 
 	void Awake() {
 		Instance = this;
@@ -71,7 +71,6 @@ public class GameState : MonoBehaviour {
 
 	IEnumerator StateOneTransition() {
 		float fadeEndTime = Time.fixedTime + TitleFadeTime;
-		float alpha = 1;
 		while (Time.fixedTime < fadeEndTime) {
 			SetIntroRenderersAlpha(Mathf.Clamp01( 1f - (Time.fixedTime - fadeEndTime + TitleFadeTime) / TitleFadeTime ));
 			yield return false;

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class IntroScene {
@@ -7,7 +8,11 @@ public class IntroScene {
 	DogBarker m_DogBarker;
 	PipAnimator m_CoolPip;
 	CameraAnimator m_CameraAnim;
-	GameObject m_UILayer;
+	UIParts m_UILayer;
+
+	Transform usernameContainer;
+	Text usernameText;
+	GameObject somethingElse;
 
 	public IntroScene() {
 		m_Cooldog = Cooldog.Instance;
@@ -15,10 +20,25 @@ public class IntroScene {
 		m_CoolPip = GameState.Instance.m_CooldogPip;
 		m_CameraAnim = GameState.Instance.m_CamAnimator;
 		m_UILayer = GameState.Instance.m_UILayer;
+
+		usernameContainer = m_UILayer.m_UsernameContainer;
+		usernameText = usernameContainer.GetComponentInChildren<Text>();
+	}
+
+
+	public IEnumerator typingListener;
+	public IEnumerator FakeNameTyping() {
+		while (true) {
+			if (Input.anyKeyDown) {
+				usernameText.text += (char)('A' + Random.Range (0,58));
+			}
+			yield return false;
+		}
 	}
 
 	public IEnumerator Play() {
 
+		m_CoolPip.ToggleBigdog(true);
 		m_CoolPip.TogglePip(true);
 
 		yield return m_DogBarker.Play(0f, new string[] {
@@ -27,13 +47,18 @@ public class IntroScene {
 			"lets start by getting you to type your name"
 		});
 
-		// show name input UI
-		yield return new WaitForSeconds(0.2f);
+		usernameContainer.gameObject.SetActive(true);
+		typingListener = FakeNameTyping();
+		m_Cooldog.StartCoroutine(typingListener);
+		yield return new WaitForSeconds(2.5f);
+		m_Cooldog.StopCoroutine(typingListener);
 
 		yield return m_DogBarker.Play(0f, new string[] {
 			"wow u do not seem good at typing right now.",
 			"ill just call you... student"
 		});
+
+		usernameContainer.gameObject.SetActive(false);
 
 		yield return m_DogBarker.Play(0f, new string[] {
 			"lets instead check how fast you can keyboard",
@@ -66,9 +91,11 @@ public class IntroScene {
 		m_CoolPip.TogglePip(false);
 		m_CameraAnim.CurrentViewpoint = 2;
 		yield return new WaitForSeconds(0.3f);
+		m_CoolPip.ToggleBigdog(false);
 
 		yield return m_DogBarker.Play(0f, new string[] {
-			"this is it. many typing legends grew here including me.\n maybe you will be one of them",
+			"this is it. many typing legends grew here including me.",
+			"maybe you will be one of them",
 			"lessons can be picked from the board here."
 		});
 
