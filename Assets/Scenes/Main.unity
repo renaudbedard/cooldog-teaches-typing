@@ -287,10 +287,12 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ab4132c0124124045878f303cde20481, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &1078226686 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 194858, guid: 8700a87ca1c42479d8a34dfe17968368, type: 2}
+--- !u!114 &1078226687 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 11402438, guid: 8700a87ca1c42479d8a34dfe17968368,
+    type: 2}
   m_PrefabInternal: {fileID: 1531925587}
+  m_Script: {fileID: 11500000, guid: b629b4c81515e47d9b031706f7cb08eb, type: 3}
 --- !u!114 &1196977821 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 11454466, guid: 8700a87ca1c42479d8a34dfe17968368,
@@ -420,6 +422,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 185044, guid: d1157382b7db3aa45a3962e1fe659cb2, type: 2}
+      propertyPath: m_Name
+      value: Main Camera
+      objectReference: {fileID: 0}
     - target: {fileID: 11448528, guid: d1157382b7db3aa45a3962e1fe659cb2, type: 2}
       propertyPath: Renderers.Array.data[0]
       value: 
@@ -439,11 +445,7 @@ Prefab:
     - target: {fileID: 11448528, guid: d1157382b7db3aa45a3962e1fe659cb2, type: 2}
       propertyPath: m_UILayer
       value: 
-      objectReference: {fileID: 1078226686}
-    - target: {fileID: 185044, guid: d1157382b7db3aa45a3962e1fe659cb2, type: 2}
-      propertyPath: m_Name
-      value: Main Camera
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1078226687}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d1157382b7db3aa45a3962e1fe659cb2, type: 2}
   m_IsPrefabParent: 0
@@ -580,6 +582,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 11475484, guid: 8393ca32ddd58d947b0d2dfdcd3fff3a, type: 2}
+      propertyPath: Masher
+      value: 
+      objectReference: {fileID: 1965158101}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8393ca32ddd58d947b0d2dfdcd3fff3a, type: 2}
   m_IsPrefabParent: 0
@@ -602,11 +608,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 489642, guid: 51d328ba4b6b24e17bd27aac8524c9d9, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -0.70000076
+      value: 1.7
       objectReference: {fileID: 0}
     - target: {fileID: 489642, guid: 51d328ba4b6b24e17bd27aac8524c9d9, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 0.28999996
+      value: -0.38
       objectReference: {fileID: 0}
     - target: {fileID: 489642, guid: 51d328ba4b6b24e17bd27aac8524c9d9, type: 2}
       propertyPath: m_LocalPosition.z
@@ -686,6 +692,12 @@ Prefab:
 Transform:
   m_PrefabParentObject: {fileID: 489642, guid: 51d328ba4b6b24e17bd27aac8524c9d9, type: 2}
   m_PrefabInternal: {fileID: 1743196934}
+--- !u!114 &1965158101 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 11480316, guid: 7e71f64eef317454b825a408a42249a5,
+    type: 2}
+  m_PrefabInternal: {fileID: 1397808087}
+  m_Script: {fileID: 11500000, guid: a2b929d6734598e439104da8943404cd, type: 3}
 --- !u!222 &2019914193 stripped
 CanvasRenderer:
   m_PrefabParentObject: {fileID: 22282684, guid: 8700a87ca1c42479d8a34dfe17968368,
