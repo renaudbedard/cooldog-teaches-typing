@@ -168,6 +168,12 @@ class ScreenTyping : MonoBehaviour
 
 			if (l != typedLines.Length - 1)
 				builder.Append('\n');
+			else
+			{
+				// apppend lf if last character is a space and the above line
+				if (referenceLine != null && char.IsWhiteSpace(builder[builder.Length - 1]) && position >= referenceLine.Length)
+					builder.Append('\n');
+			}
 		}
 
 		ignoreNextEvent = true;
