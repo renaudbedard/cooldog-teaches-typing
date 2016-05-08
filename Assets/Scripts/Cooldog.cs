@@ -247,7 +247,7 @@ public class Cooldog : MonoBehaviour
 
 	public IEnumerator WalkOutOfFrame()
 	{
-		if (!inFrame) { return false; }
+		if (!inFrame) { yield break; }
 		inFrame = false;
 
 		float sign = Flipped ? -1 : 1;
@@ -265,7 +265,7 @@ public class Cooldog : MonoBehaviour
 
 	public IEnumerator WalkIntoFrame()
 	{
-		if (inFrame) { return false; }
+		if (inFrame) { yield break; }
 		inFrame = true;
 
 		float sign = Flipped ? -1 : 1;

@@ -411,6 +411,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: bce1b88e560046a44bb2a7c4148e22f1, type: 3}
   - {fileID: 8300000, guid: b71b413f905910644b09feb980452dd0, type: 3}
   TeachesTyping: {fileID: 8300000, guid: 560783987af179d43b27d0e61437b1bd, type: 3}
+  Masher: {fileID: 0}
   BootedUp: 0
 --- !u!114 &11492826
 MonoBehaviour:

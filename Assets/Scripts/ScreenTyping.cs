@@ -39,6 +39,8 @@ class ScreenTyping : MonoBehaviour
 
 	public AudioClip TeachesTyping;
 
+	public HandMasher Masher;
+
 	int lastUsedSpeaker;
 	AudioSource[] speakers;
 
@@ -166,7 +168,7 @@ class ScreenTyping : MonoBehaviour
 
 	public void OnValueChanged(string value)
 	{
-		if (ignoreNextEvent)
+		if (ignoreNextEvent || referenceTextLines == null)
 			return;
 
 		// clean up value ending (if need be)
@@ -193,6 +195,7 @@ class ScreenTyping : MonoBehaviour
 
 		int mistakeCount = 0;
 		int globalPosition = 0;
+		char lastChar = '\0';
 
 		bool inBracket = false;
 		for (int l = 0; l < typedLines.Length; l++)
@@ -218,6 +221,8 @@ class ScreenTyping : MonoBehaviour
 						inBracket = false;
 					continue;
 				}
+
+				lastChar = c;
 
 				if (referenceLine != null && position < referenceLine.Length && referenceLine[position] == c)
 					builder.Append(c);
@@ -262,6 +267,8 @@ class ScreenTyping : MonoBehaviour
 		}
 		else
 			speakers[lastUsedSpeaker].PlayOneShot(TypingSounds[UnityEngine.Random.Range(0, TypingSounds.Length - 1)]);
+
+		Masher.Mash(lastChar);
 
 		lastUsedSpeaker = (lastUsedSpeaker + 1) % speakers.Length;
 
