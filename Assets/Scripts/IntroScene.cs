@@ -133,13 +133,13 @@ public class IntroScene {
 		yield return m_DogBarker.Play(0f, new string[] {
 			"this is it. many typing legends grew here including me.",
 			"maybe you will be one of them",
-			"lessons can be picked from the board here."
+			"look [DOWN] at ur computer to start a lesson"
 		});
 
 		//highlight chalkboard.
 
 		yield return m_DogBarker.Play(0f, new string[] {
-			"if you want to take a typing break, press up and down",
+			"if you want to take a typing break you can go [UP] outside",
 			"make yourslf at home"
 		});
 	}
