@@ -7,27 +7,29 @@ public class PipAnimator : MonoBehaviour {
 	[SerializeField] CameraAnimator m_CameraAnimator;
 	RectTransform m_RectTransform;
 	Vector2 TargetPivot;
-	Vector2 OffscreenX;
-	Vector2 OnscreenX;
+	Vector2 OffscreenPivot;
+	Vector2 OnscreenPivot;
 
 	// Use this for initialization
 	void Start () {
 		m_RectTransform = GetComponent<RectTransform>();
-		TargetPivot = m_RectTransform.pivot;
-		OnscreenX = TargetPivot;
-		OffscreenX = TargetPivot;
-		OffscreenX.x += 5f;
-		m_RectTransform.pivot = OffscreenX;
+
+		OnscreenPivot = m_RectTransform.pivot;
+		OffscreenPivot = m_RectTransform.pivot;
+		OffscreenPivot.x -= 22f;
+
+		TargetPivot = OffscreenPivot;
+		m_RectTransform.pivot = OffscreenPivot;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		if (m_CameraAnimator.CurrentViewpoint == 3) {
-			TargetPivot = OnscreenX;
+			TargetPivot = OnscreenPivot;
 		} else {
-			TargetPivot = OffscreenX;
+			TargetPivot = OffscreenPivot;
 		}
 
-		m_RectTransform.pivot = (m_RectTransform.pivot - TargetPivot) * 0.8f;
+		m_RectTransform.pivot += (TargetPivot - m_RectTransform.pivot) * 0.2f;
 	}
 }
