@@ -19,7 +19,8 @@ public class Cooldog : MonoBehaviour
 	{
 		Instance = this;
 	}
-
+		
+	bool inFrame = true;
 	bool flipped;
 	public bool Flipped
 	{
@@ -76,6 +77,7 @@ public class Cooldog : MonoBehaviour
 			{
 				Body = new [] { new AnimatedSprite { Frame = "Batman" } },
 				Headdress = new[] { new AnimatedSprite { Frame = "Batman" } },
+				NeckDecoration = new AnimatedSprite[] { },
 			} 
 		},
 		{ 
@@ -209,8 +211,7 @@ public class Cooldog : MonoBehaviour
 
 	public bool Blinking { get; private set; }
 
-	void Start()
-	{
+	IEnumerator Start(){
 		CurrentSet = Costumes["Normal"];
 
 		Body = GameObject.Find("Body").GetComponent<DogPart>();
@@ -225,6 +226,12 @@ public class Cooldog : MonoBehaviour
 		Flipped = true;
 
 		ApplyCostume();
+
+		yield return new WaitForSeconds(5f);
+
+		yield return StartCoroutine(ChangeCostume("Batman"));
+		yield return StartCoroutine(ChangeCostume("Quiz"));
+		yield return StartCoroutine(ChangeCostume("Music"));
 	}
 
 	public IEnumerator ChangeCostume(string costume) 
@@ -239,13 +246,16 @@ public class Cooldog : MonoBehaviour
 		yield return WalkIntoFrame();
 	}
 
-	const float WalkOffset = 17;
-	const float WalkSpeed = 20;
+	const float WalkOffset = 21f;
+	const float WalkSpeed = 20f;
 	const float BobHeight = 0.75f;
-	const float BobSpeed = 3;
+	const float BobSpeed = 3f;
 
 	public IEnumerator WalkOutOfFrame()
 	{
+		if (!inFrame) { return; }
+		inFrame = false;
+
 		float sign = Flipped ? -1 : 1;
 
 		float step = 0;
@@ -258,8 +268,12 @@ public class Cooldog : MonoBehaviour
 		}
 		transform.localPosition = new Vector3(WalkOffset * sign, 0, 0);
 	}
+
 	public IEnumerator WalkIntoFrame()
 	{
+		if (inFrame) { return; }
+		inFrame = true;
+
 		float sign = Flipped ? -1 : 1;
 
 		float step = 0;

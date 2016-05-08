@@ -20,9 +20,4 @@ public class CameraTexture : MonoBehaviour {
 		m_Smalldog.mainTexture = m_RenderTexture;
 		m_UIDog.texture = m_RenderTexture;
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 }
