@@ -94,6 +94,12 @@ Camera:
   m_PrefabParentObject: {fileID: 2062916, guid: 51d328ba4b6b24e17bd27aac8524c9d9,
     type: 2}
   m_PrefabInternal: {fileID: 1743196934}
+--- !u!114 &180640024 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 11456636, guid: 5c81d8aeb16a7d941aaa67604c699f21,
+    type: 2}
+  m_PrefabInternal: {fileID: 1863872116}
+  m_Script: {fileID: 11500000, guid: 2d1eda6e3b17fa946b9b600fc77e9f31, type: 3}
 --- !u!1 &218914029
 GameObject:
   m_ObjectHideFlags: 0
@@ -422,10 +428,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 185044, guid: d1157382b7db3aa45a3962e1fe659cb2, type: 2}
-      propertyPath: m_Name
-      value: Main Camera
-      objectReference: {fileID: 0}
     - target: {fileID: 11448528, guid: d1157382b7db3aa45a3962e1fe659cb2, type: 2}
       propertyPath: Renderers.Array.data[0]
       value: 
@@ -443,9 +445,17 @@ Prefab:
       value: 
       objectReference: {fileID: 1727958744}
     - target: {fileID: 11448528, guid: d1157382b7db3aa45a3962e1fe659cb2, type: 2}
+      propertyPath: LogoAnimator
+      value: 
+      objectReference: {fileID: 180640024}
+    - target: {fileID: 11448528, guid: d1157382b7db3aa45a3962e1fe659cb2, type: 2}
       propertyPath: m_UILayer
       value: 
       objectReference: {fileID: 1078226687}
+    - target: {fileID: 185044, guid: d1157382b7db3aa45a3962e1fe659cb2, type: 2}
+      propertyPath: m_Name
+      value: Main Camera
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d1157382b7db3aa45a3962e1fe659cb2, type: 2}
   m_IsPrefabParent: 0
