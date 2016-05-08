@@ -79,7 +79,8 @@ public class IntroScene {
 		usernameContainer.gameObject.SetActive(true);
 		typingListener = FakeNameTyping();
 		m_Cooldog.StartCoroutine(typingListener);
-		yield return new WaitForSeconds(2.5f);
+		yield return new WaitUntil(() => {return (usernameText.text.Length > 0);});
+		yield return new WaitForSeconds(2f);
 		m_Cooldog.StopCoroutine(typingListener);
 
 		yield return m_DogBarker.Play(0f, new string[] {
