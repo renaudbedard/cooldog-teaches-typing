@@ -1,6 +1,14 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+
+[Serializable]
+public class Lesson
+{
+	public string Name;
+	public string Path;
+}
 
 public class GameState : MonoBehaviour {
 
@@ -14,7 +22,15 @@ public class GameState : MonoBehaviour {
 	
 	public PipAnimator m_CooldogPip;
 	public CameraAnimator m_CamAnimator;
-	public GameObject m_UILayer;
+
+	public UIParts m_UILayer;
+
+	public Lesson[] Lessons;
+
+	public string CurrentLesson;
+
+	public Canvas Blackboard;
+	public GameObject Strikeline;
 
 	void Awake() {
 		Instance = this;
@@ -71,7 +87,6 @@ public class GameState : MonoBehaviour {
 
 	IEnumerator StateOneTransition() {
 		float fadeEndTime = Time.fixedTime + TitleFadeTime;
-		float alpha = 1;
 		while (Time.fixedTime < fadeEndTime) {
 			SetIntroRenderersAlpha(Mathf.Clamp01( 1f - (Time.fixedTime - fadeEndTime + TitleFadeTime) / TitleFadeTime ));
 			yield return false;

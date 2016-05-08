@@ -100,6 +100,12 @@ MonoBehaviour:
   m_CooldogPip: {fileID: 0}
   m_CamAnimator: {fileID: 11476654}
   m_UILayer: {fileID: 0}
+  Lessons:
+  - Name: typing basics
+    Path: lesson1
+  CurrentLesson: 
+  Blackboard: {fileID: 0}
+  Strikeline: {fileID: 147742, guid: 58f7d98f7bc4622488d050c07fb7e241, type: 2}
   CurrentState: 0
 --- !u!114 &11476654
 MonoBehaviour:

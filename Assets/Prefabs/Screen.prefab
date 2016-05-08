@@ -412,6 +412,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: b71b413f905910644b09feb980452dd0, type: 3}
   TeachesTyping: {fileID: 8300000, guid: 560783987af179d43b27d0e61437b1bd, type: 3}
   Masher: {fileID: 0}
+  Blackboard: {fileID: 0}
+  Strikeline: {fileID: 147742, guid: 58f7d98f7bc4622488d050c07fb7e241, type: 2}
   BootedUp: 0
 --- !u!114 &11492826
 MonoBehaviour:

@@ -44,6 +44,8 @@ class ScreenTyping : MonoBehaviour
 	int lastUsedSpeaker;
 	AudioSource[] speakers;
 
+	public string NextLesson;
+
 	void Awake()
 	{
 		Instance = this;
@@ -111,7 +113,7 @@ class ScreenTyping : MonoBehaviour
 		LoadingScreen.color = new Color(LoadingScreen.color.r, LoadingScreen.color.g, LoadingScreen.color.b, 0f);
 		yield return new WaitForSeconds(1.0f);
 
-		LoadLesson("lesson1");
+		LoadLesson(NextLesson);
 		GetComponentInChildren<InputField>().Select();
 	}
 
