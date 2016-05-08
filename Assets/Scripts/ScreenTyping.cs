@@ -9,6 +9,8 @@ class ScreenTyping : MonoBehaviour
 {
 	public static ScreenTyping Instance;
 
+	const string DynamicStringMarker = "559";
+
 	TextGenerator textGenerator;
 	TextGenerationSettings settings;
 
@@ -25,6 +27,10 @@ class ScreenTyping : MonoBehaviour
 	bool ignoreNextEvent;
 	int lastSelectionPosition = -1;
 	int lastMistakeCount;
+
+	bool hasDynamicText;
+	int nonWhitespaceReferenceLength;
+	string dynamicTextReplacement;
 
 	public AudioClip[] TypingSounds;
 	public AudioClip[] AltTypingSounds;
@@ -85,19 +91,27 @@ class ScreenTyping : MonoBehaviour
 
 		var typedLinesCount = textGenerator.lineCount;
 
+		var displayedText = referenceText;
+		if (hasDynamicText)
+			displayedText = displayedText.Replace(DynamicStringMarker, dynamicTextReplacement);
+
 		if (typedLinesCount >= 5)
 		{
 			int firstLine = Mathf.Clamp(typedLinesCount - 4, 0, referenceTextLineInfo.Length - 1);
-			Reference.text = referenceText.Substring(referenceTextLineInfo[firstLine].startCharIdx);
+			Reference.text = displayedText.Substring(referenceTextLineInfo[firstLine].startCharIdx);
 		}
 		else
-			Reference.text = referenceText;
+			Reference.text = displayedText;
 	}
 
 	public void LoadLesson(string title)
 	{
 		var lessonText = Resources.Load<TextAsset>(title);
 		referenceText = Reference.text = lessonText.text;
+
+		hasDynamicText = referenceText.Contains(DynamicStringMarker);
+		if (hasDynamicText)
+			nonWhitespaceReferenceLength = referenceText.Replace(" ", "").Length;
 
 		textGenerator.Populate(referenceText, settings);
 		referenceTextLineInfo = textGenerator.lines.ToArray();
@@ -121,6 +135,8 @@ class ScreenTyping : MonoBehaviour
 		// clean up value ending (if need be)
 		if (value.TrimEnd().EndsWith("/color", StringComparison.InvariantCulture))
 			value = value.Substring(0, value.LastIndexOf("<color", StringComparison.InvariantCulture));
+		// no tabs!
+		value = value.Replace("\t", "");
 
 		// split lines
 		textGenerator.Populate(value, settings);
@@ -139,6 +155,7 @@ class ScreenTyping : MonoBehaviour
 		builder.Remove(0, builder.Length);
 
 		int mistakeCount = 0;
+		int globalPosition = 0;
 
 		bool inBracket = false;
 		for (int l = 0; l < typedLines.Length; l++)
@@ -146,6 +163,9 @@ class ScreenTyping : MonoBehaviour
 			var line = typedLines[l];
 			var referenceLine = l < referenceTextLines.Length ? referenceTextLines[l] : null;
 			int position = 0;
+
+			if (hasDynamicText && referenceLine != null)
+				referenceLine = referenceLine.Replace(DynamicStringMarker, dynamicTextReplacement);
 
 			for (int i = 0; i < line.Length; i++)
 			{
@@ -171,6 +191,8 @@ class ScreenTyping : MonoBehaviour
 				}
 
 				position++;
+				if (!char.IsWhiteSpace(c))
+					globalPosition++;
 			}
 
 			if (l != typedLines.Length - 1)
@@ -178,9 +200,15 @@ class ScreenTyping : MonoBehaviour
 			else
 			{
 				// apppend lf if last character is a space and the above line
-				if (referenceLine != null && char.IsWhiteSpace(builder[builder.Length - 1]) && position >= referenceLine.Length)
+				if (referenceLine != null && builder.Length > 0 && char.IsWhiteSpace(builder[builder.Length - 1]) && position >= referenceLine.Length)
 					builder.Append('\n');
 			}
+		}
+
+		if (hasDynamicText)
+		{
+			var charsLeft = nonWhitespaceReferenceLength - globalPosition;
+			dynamicTextReplacement = string.Format("{0:000}", charsLeft);
 		}
 
 		ignoreNextEvent = true;
@@ -191,7 +219,10 @@ class ScreenTyping : MonoBehaviour
 		typed.caretPosition = typed.text.Length;
 
 		if (mistakeCount > lastMistakeCount)
+		{
+			StartCoroutine(Cooldog.Instance.Woah());
 			speakers[lastUsedSpeaker].PlayOneShot(AltTypingSounds[UnityEngine.Random.Range(0, AltTypingSounds.Length - 1)]);
+		}
 		else
 			speakers[lastUsedSpeaker].PlayOneShot(TypingSounds[UnityEngine.Random.Range(0, TypingSounds.Length - 1)]);
 
