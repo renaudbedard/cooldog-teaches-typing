@@ -35,18 +35,17 @@ public class DogBarker : MonoBehaviour {
 		cooldog = GetComponent<Cooldog>();
 
 		talkingSpeaker.clip = coolBark[Random.Range(0, coolBark.Length)];
+		// He barks once. It's like a volume check I guess.
 		talkingSpeaker.Play();
-
-		Play(2f, new string[] {"hey man", "welcome to cooldog teaches typing"});
 	}
 
-	public void Play(float delay, params string[] parts) {
+	public IEnumerator Play(float delay, params string[] parts) {
 		var wasBusy = busy;
 		busy = true;
 		foreach (var p in parts)
 			currentParts.Enqueue(p);
 		if (!wasBusy)
-			StartCoroutine(PlayInternal(delay));
+			yield return StartCoroutine(PlayInternal(delay));
 	}
 
 	IEnumerator PlayInternal(float delay = 0f) {
@@ -67,7 +66,11 @@ public class DogBarker : MonoBehaviour {
 				if (targetText == "") {
 					break;
 				}
-				dialogueBox.text += letter;
+				if (letter == '\b') {
+					dialogueBox.text = dialogueBox.text.Remove(dialogueBox.text.Length - 1);
+				} else {
+					dialogueBox.text += letter;
+				}
 
 				if (letter == ' ' || letter == '0') {
 					cooldog.CloseMouth();
