@@ -33,10 +33,6 @@ public class DogBarker : MonoBehaviour {
 		busy = false;
 		talkingSpeaker = GetComponent<AudioSource>();
 		cooldog = GetComponent<Cooldog>();
-
-		talkingSpeaker.clip = coolBark[Random.Range(0, coolBark.Length)];
-		// He barks once. It's like a volume check I guess.
-		talkingSpeaker.Play();
 	}
 
 	public IEnumerator Play(float delay, params string[] parts) {
