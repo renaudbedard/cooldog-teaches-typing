@@ -200,7 +200,7 @@ class ScreenTyping : MonoBehaviour
 			else
 			{
 				// apppend lf if last character is a space and the above line
-				if (referenceLine != null && builder.Length > 0 && char.IsWhiteSpace(builder[builder.Length - 1]) && position >= referenceLine.Length)
+				if (referenceLine != null && builder.Length > 0 && char.IsWhiteSpace(builder[builder.Length - 1]) && position >= referenceLine.Length && !Input.GetKey(KeyCode.Backspace))
 					builder.Append('\n');
 			}
 		}
