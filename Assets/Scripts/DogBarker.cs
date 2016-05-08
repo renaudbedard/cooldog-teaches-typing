@@ -61,6 +61,8 @@ public class DogBarker : MonoBehaviour {
 			dialogueBox.enabled = true;
 			hideAlso.SetActive(true);
 
+			bool skip = false;
+
 			foreach (char letter in targetText.ToCharArray()) {
 				if (targetText == "") {
 					break;
@@ -71,8 +73,9 @@ public class DogBarker : MonoBehaviour {
 					cooldog.CloseMouth();
 				}
 				if (".aeiou?!1".Contains(letter.ToString())) {
-					talkingSpeaker.clip = coolBark[Random.Range(0, coolBark.Length)];
-					talkingSpeaker.Play();
+					if (!skip)
+						talkingSpeaker.PlayOneShot(coolBark[Random.Range(0, coolBark.Length)]);
+					skip = !skip;
 
 					cooldog.OpenMouth();
 				}

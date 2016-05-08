@@ -22,6 +22,13 @@ class ScreenTyping : MonoBehaviour
 	InputField typed;
 	bool ignoreNextEvent;
 	int lastSelectionPosition = -1;
+	int lastMistakeCount;
+
+	public AudioClip[] TypingSounds;
+	public AudioClip[] AltTypingSounds;
+
+	int lastUsedSpeaker;
+	AudioSource[] speakers;
 
 	void Start()
 	{
@@ -42,6 +49,16 @@ class ScreenTyping : MonoBehaviour
 			fontStyle = Reference.fontStyle,
 			verticalOverflow = VerticalWrapMode.Overflow
 		};
+
+		speakers = new AudioSource[10];
+		for (int i = 0; i < 10; i++)
+		{
+			var go = new GameObject("Typing speaker " + i);
+			go.transform.parent = transform;
+			speakers[i] = go.AddComponent<AudioSource>();
+			var filter = go.AddComponent<AudioReverbFilter>();
+			filter.reverbLevel = -1000;
+		}
 
 		LoadLesson("lesson1");
 	}
@@ -92,10 +109,7 @@ class ScreenTyping : MonoBehaviour
 	public void OnValueChanged(string value)
 	{
 		if (ignoreNextEvent)
-		{
-			ignoreNextEvent = false;
 			return;
-		}
 
 		// clean up value ending (if need be)
 		if (value.TrimEnd().EndsWith("/color", StringComparison.InvariantCulture))
@@ -116,6 +130,8 @@ class ScreenTyping : MonoBehaviour
 
 		// clear
 		builder.Remove(0, builder.Length);
+
+		int mistakeCount = 0;
 
 		bool inBracket = false;
 		for (int l = 0; l < typedLines.Length; l++)
@@ -142,7 +158,10 @@ class ScreenTyping : MonoBehaviour
 				if (referenceLine != null && position < referenceLine.Length && referenceLine[position] == c)
 					builder.Append(c);
 				else
+				{
+					mistakeCount++;
 					builder.AppendFormat("<color=red>{0}</color>", c);
+				}
 
 				position++;
 			}
@@ -157,6 +176,15 @@ class ScreenTyping : MonoBehaviour
 		ignoreNextEvent = false;
 
 		typed.caretPosition = typed.text.Length;
+
+		if (mistakeCount > lastMistakeCount)
+			speakers[lastUsedSpeaker].PlayOneShot(AltTypingSounds[UnityEngine.Random.Range(0, AltTypingSounds.Length - 1)]);
+		else
+			speakers[lastUsedSpeaker].PlayOneShot(TypingSounds[UnityEngine.Random.Range(0, TypingSounds.Length - 1)]);
+
+		lastUsedSpeaker = (lastUsedSpeaker + 1) % speakers.Length;
+
+		lastMistakeCount = mistakeCount;
 
 		//Debug.Log(value.Replace('<', '{').Replace('>', '}') + " => " + typed.text.Replace('<', '{').Replace('>', '}'));
 	}
