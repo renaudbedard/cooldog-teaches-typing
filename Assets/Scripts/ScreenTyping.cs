@@ -70,7 +70,7 @@ class ScreenTyping : MonoBehaviour
 			go.transform.parent = transform;
 			speakers[i] = go.AddComponent<AudioSource>();
 			var filter = go.AddComponent<AudioReverbFilter>();
-			filter.reverbLevel = -1000;
+			filter.reverbLevel = -4000;
 		}
 
 		LoadLesson("lesson1");
