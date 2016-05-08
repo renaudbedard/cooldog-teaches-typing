@@ -46,7 +46,7 @@ public class GameState : MonoBehaviour {
 			break;
 		case 2:
 			// Skip intro on keypress ~
-			if (Input.GetKeyDown(KeyCode.BackQuote)) {
+			if (Input.GetKeyDown(KeyCode.Escape)) {
 				StopCoroutine(IntroTransition);
 				SetIntroRenderersAlpha( 0f );
 				if (IntroRoutine != null)
