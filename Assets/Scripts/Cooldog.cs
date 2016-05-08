@@ -13,6 +13,13 @@ public struct AnimatedSprite
 
 public class Cooldog : MonoBehaviour
 {
+	public static Cooldog Instance;
+
+	void Awake()
+	{
+		Instance = this;
+	}
+
 	bool flipped;
 	public bool Flipped
 	{
@@ -271,7 +278,7 @@ public class Cooldog : MonoBehaviour
 	{
 		if (!hasMouthOpen)
 		{
-			if (Eyes.CurrentAnimation == null || Eyes.CurrentAnimation[0].Frame == "Buggy")
+			if (Eyes.CurrentAnimation == null)
 			{
 				Blinking = true;
 				Eyes.SetAnimation(BlinkEyes);
@@ -279,6 +286,17 @@ public class Cooldog : MonoBehaviour
 				Eyes.SetAnimation(CurrentSet.Eyes ?? Costumes["Normal"].Eyes);
 				Blinking = false;
 			}
+		}
+	}
+
+	readonly AnimatedSprite[] BuggyEyes = new[] { new AnimatedSprite { Frame = "Buggy" } };
+	public IEnumerator Woah()
+	{
+		if (Eyes.CurrentAnimation == null)
+		{
+			Eyes.SetAnimation(BuggyEyes);
+			yield return new WaitForSeconds(0.35f);
+			Eyes.SetAnimation(CurrentSet.Eyes ?? Costumes["Normal"].Eyes);
 		}
 	}
 
