@@ -198,6 +198,11 @@ Transform:
 Transform:
   m_PrefabParentObject: {fileID: 439788, guid: ab4132c0124124045878f303cde20481, type: 2}
   m_PrefabInternal: {fileID: 1048216155}
+--- !u!223 &594096513 stripped
+Canvas:
+  m_PrefabParentObject: {fileID: 22316148, guid: cf5e58bf6e3665943927691b78d25419,
+    type: 2}
+  m_PrefabInternal: {fileID: 1327222857}
 --- !u!4 &664818756 stripped
 Transform:
   m_PrefabParentObject: {fileID: 422994, guid: cf5e58bf6e3665943927691b78d25419, type: 2}
@@ -513,10 +518,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 185044, guid: d1157382b7db3aa45a3962e1fe659cb2, type: 2}
-      propertyPath: m_Name
-      value: Main Camera
-      objectReference: {fileID: 0}
     - target: {fileID: 11448528, guid: d1157382b7db3aa45a3962e1fe659cb2, type: 2}
       propertyPath: Renderers.Array.data[0]
       value: 
@@ -541,6 +542,14 @@ Prefab:
       propertyPath: m_UILayer
       value: 
       objectReference: {fileID: 1078226687}
+    - target: {fileID: 11448528, guid: d1157382b7db3aa45a3962e1fe659cb2, type: 2}
+      propertyPath: Blackboard
+      value: 
+      objectReference: {fileID: 594096513}
+    - target: {fileID: 185044, guid: d1157382b7db3aa45a3962e1fe659cb2, type: 2}
+      propertyPath: m_Name
+      value: Main Camera
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d1157382b7db3aa45a3962e1fe659cb2, type: 2}
   m_IsPrefabParent: 0

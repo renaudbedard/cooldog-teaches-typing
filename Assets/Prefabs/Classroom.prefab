@@ -239,10 +239,12 @@ MonoBehaviour:
     m_RichText: 0
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
-    m_LineSpacing: 1
+    m_LineSpacing: 1.5
   m_Text: 'lesson 1 : typing basics
 
-    lesson 2 : '
+    lesson 2 : home row
+
+    lesson 3 : research review'
 --- !u!114 &11451630
 MonoBehaviour:
   m_ObjectHideFlags: 1

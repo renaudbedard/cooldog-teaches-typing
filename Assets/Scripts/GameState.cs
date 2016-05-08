@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System.Collections;
 
@@ -29,7 +30,20 @@ public class GameState : MonoBehaviour {
 
 	public Lesson[] Lessons;
 
-	public string CurrentLesson;
+	public Func<IEnumerator>[] LessonStartCoroutine = new Func<IEnumerator>[]
+	{
+		LessonOneStart,
+		LessonTwoStart,
+		LessonThreeStart
+	};
+	public Func<IEnumerator>[] LessonEndCoroutine = new Func<IEnumerator>[]
+	{
+		LessonOneEnd,
+		LessonTwoEnd,
+		LessonThreeEnd
+	};
+
+	public int currentLesson;
 
 	public Canvas Blackboard;
 	public GameObject Strikeline;
@@ -42,12 +56,21 @@ public class GameState : MonoBehaviour {
 
 	void Restart() {
 		CurrentState = 0;
+		currentLesson = 0;
 	}
 
 	// Use this for initialization
 	void Start ()
 	{
-		ScreenTyping.Instance.NextLesson = Lessons[0].Path;
+		updateLesson();
+	}
+
+	void updateLesson()
+	{
+		if (currentLesson >= Lessons.Length)
+			currentLesson = Lessons.Length - 1;
+
+		ScreenTyping.Instance.NextLesson = Lessons[currentLesson].Path;
 	}
 	
 	// Update is called once per frame
@@ -102,5 +125,122 @@ public class GameState : MonoBehaviour {
 		IntroRoutine =  m_Intro.Play();
 		yield return StartCoroutine( IntroRoutine );
 		CurrentState = 3;
+	}
+
+	public void EndLesson()
+	{
+		StartCoroutine(LessonEndCoroutine[currentLesson]());
+		currentLesson++;
+		updateLesson();
+	}
+
+	public void StartLesson()
+	{
+		StartCoroutine(LessonStartCoroutine[currentLesson]());
+	}
+
+	static IEnumerator LessonOneStart()
+	{
+		var dogBarker = Cooldog.Instance.GetComponent<DogBarker>();
+
+		yield return dogBarker.Play(0f, new[] {
+			"typing can be hard, this is an easy lesson."
+		});
+
+		yield return dogBarker.Play(0.25f, new[] {
+			"just type what's on screen and try not to hit extra keys with your paws,",
+			"i do that all teh time. dont worry."
+		});
+	}
+
+	static IEnumerator LessonTwoStart()
+	{
+		var dogBarker = Cooldog.Instance.GetComponent<DogBarker>();
+
+		yield return dogBarker.Play(0f, new[] {
+			"another lesson coming right up. this time we focus on the middle homerow of the keyboard."
+		});
+
+		yield return dogBarker.Play(0.25f, new[] {
+			"try using your back paws to type more at once."
+		});
+	}
+
+	static IEnumerator LessonThreeStart()
+	{
+		var dogBarker = Cooldog.Instance.GetComponent<DogBarker>();
+
+		yield return dogBarker.Play(0f, new[] {
+			"alright. after that last lesson i had some computer questions to search.",
+			"help me go through my notes."
+		});
+	}
+
+	static IEnumerator LessonOneEnd()
+	{
+		var dogBarker = Cooldog.Instance.GetComponent<DogBarker>();
+
+		yield return new WaitForSeconds(0.5f);
+
+		Instance.m_CamAnimator.CurrentViewpoint = 2;
+		EventSystem.current.SetSelectedGameObject(null);
+
+		yield return new WaitForSeconds(1.0f);
+
+		ScreenTyping.Instance.ShutDown();
+
+		yield return dogBarker.Play(0f, new [] {
+			string.Format("that’s not bad but you still goofed {0} times.", ScreenTyping.Instance.lastMistakeCount)
+		});
+
+		yield return dogBarker.Play(0.25f, new [] {
+			"dont worry youll get better if you do more lessons."
+		});
+	}
+
+	static IEnumerator LessonTwoEnd()
+	{
+		var dogBarker = Cooldog.Instance.GetComponent<DogBarker>();
+
+		yield return new WaitForSeconds(0.5f);
+
+		Instance.m_CamAnimator.CurrentViewpoint = 2;
+		EventSystem.current.SetSelectedGameObject(null);
+
+		yield return new WaitForSeconds(1.0f);
+
+		ScreenTyping.Instance.ShutDown();
+
+		yield return dogBarker.Play(0f, new[] {
+			"woah okay. i left for a bit to research, but it sounded like you did really fast."
+		});
+
+		yield return dogBarker.Play(0.25f, new[] {
+			"how about you put those typing skills to the test and help me look some stuff up."
+		});
+	}
+
+	static IEnumerator LessonThreeEnd()
+	{
+		var dogBarker = Cooldog.Instance.GetComponent<DogBarker>();
+
+		yield return new WaitForSeconds(0.5f);
+
+		Instance.m_CamAnimator.CurrentViewpoint = 2;
+		EventSystem.current.SetSelectedGameObject(null);
+
+		yield return new WaitForSeconds(1.0f);
+
+		ScreenTyping.Instance.ShutDown();
+
+		// TODO: GAME END DIALOG
+
+		yield return dogBarker.Play(0f, new[] {
+			"here we are. youre now a typing legend just like me."
+		});
+
+		yield return dogBarker.Play(0.25f, new[] {
+			"i hope you enjoyed your stay and you learned cool facts. ill see you later"
+		});	
 	}
 }

@@ -104,7 +104,11 @@ MonoBehaviour:
   Lessons:
   - Name: typing basics
     Path: lesson1
-  CurrentLesson: 
+  - Name: home row
+    Path: lesson2
+  - Name: reseach review
+    Path: lesson3
+  currentLesson: 0
   Blackboard: {fileID: 0}
   Strikeline: {fileID: 147742, guid: 58f7d98f7bc4622488d050c07fb7e241, type: 2}
   CurrentState: 0

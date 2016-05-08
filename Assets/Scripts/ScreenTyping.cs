@@ -29,7 +29,7 @@ class ScreenTyping : MonoBehaviour
 	InputField typed;
 	bool ignoreNextEvent;
 	int lastSelectionPosition = -1;
-	int lastMistakeCount;
+	public int lastMistakeCount;
 
 	bool hasDynamicText;
 	int nonWhitespaceReferenceLength;
@@ -116,8 +116,22 @@ class ScreenTyping : MonoBehaviour
 		LoadingScreen.color = new Color(LoadingScreen.color.r, LoadingScreen.color.g, LoadingScreen.color.b, 0f);
 		yield return new WaitForSeconds(1.0f);
 
+		GameState.Instance.StartLesson();
+
 		LoadLesson(NextLesson);
 		GetComponentInChildren<InputField>().Select();
+	}
+
+	public void ShutDown()
+	{
+		enabled = true;
+		ignoreNextEvent = true;
+
+		BootedUp = false;
+		referenceText = Reference.text = string.Empty;
+		typed.text = string.Empty;
+
+		ignoreNextEvent = false;
 	}
 
 	void Update()
@@ -175,7 +189,7 @@ class ScreenTyping : MonoBehaviour
 
 	public void OnValueChanged(string value)
 	{
-		if (ignoreNextEvent || referenceTextLines == null)
+		if (ignoreNextEvent || referenceTextLines == null || !enabled)
 			return;
 
 		// clean up value ending (if need be)
@@ -203,6 +217,8 @@ class ScreenTyping : MonoBehaviour
 		int mistakeCount = 0;
 		int globalPosition = 0;
 		char lastChar = '\0';
+
+		bool done = false;
 
 		bool inBracket = false;
 		for (int l = 0; l < typedLines.Length; l++)
@@ -243,6 +259,9 @@ class ScreenTyping : MonoBehaviour
 				if (!char.IsWhiteSpace(c))
 					globalPosition++;
 			}
+
+			if (referenceLine != null && l >= referenceTextLines.Length - 1 && position >= referenceLine.Length)
+				done = true;
 
 			if (l != typedLines.Length - 1)
 				builder.Append('\n');
@@ -299,6 +318,12 @@ class ScreenTyping : MonoBehaviour
 		Masher.Mash(lastChar);
 
 		lastMistakeCount = mistakeCount;
+
+		if (done)
+		{
+			enabled = false;
+			GameState.Instance.EndLesson();
+		}
 
 		//Debug.Log(value.Replace('<', '{').Replace('>', '}') + " => " + typed.text.Replace('<', '{').Replace('>', '}'));
 	}
