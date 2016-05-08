@@ -40,6 +40,7 @@ public class IntroScene {
 		while (true) {
 			if (Input.anyKeyDown) {
 				usernameText.text += (char)('A' + Random.Range (0,58));
+				ScreenTyping.Instance.PlayTypingSound();
 			}
 			yield return false;
 		}
@@ -53,6 +54,10 @@ public class IntroScene {
 			counterFill.fillAmount = 1f - ((Time.time - startTime) / time);
 
 			keysPressed += Input.inputString.Length;
+
+			if (Input.inputString.Length > 0 ) {
+				ScreenTyping.Instance.PlayTypingSound();
+			}
 
 			counterText.text = (keysPressed).ToString();
 
@@ -134,7 +139,7 @@ public class IntroScene {
 		//highlight chalkboard.
 
 		yield return m_DogBarker.Play(0f, new string[] {
-			"if you want to take a typing break, you can check out some of the other stuff",
+			"if you want to take a typing break, press up and down",
 			"make yourslf at home"
 		});
 	}

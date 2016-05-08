@@ -55,6 +55,7 @@ public class GameState : MonoBehaviour {
 		switch(CurrentState) {
 		case 0:
 			if (Input.anyKeyDown && !Input.GetMouseButton(0) && !Input.GetMouseButton(1)) {
+				ScreenTyping.Instance.PlayTypingSound(true);
 				CurrentState = 1;
 			}
 			break;

@@ -289,20 +289,27 @@ class ScreenTyping : MonoBehaviour
 
 		typed.caretPosition = typed.text.Length;
 
-		if (mistakeCount > lastMistakeCount)
-		{
+		if (mistakeCount > lastMistakeCount) {
 			StartCoroutine(Cooldog.Instance.Woah());
-			speakers[lastUsedSpeaker].PlayOneShot(AltTypingSounds[UnityEngine.Random.Range(0, AltTypingSounds.Length - 1)]);
+			PlayTypingSound(true);
+		} else {
+			PlayTypingSound(false);
 		}
-		else
-			speakers[lastUsedSpeaker].PlayOneShot(TypingSounds[UnityEngine.Random.Range(0, TypingSounds.Length - 1)]);
 
 		Masher.Mash(lastChar);
-
-		lastUsedSpeaker = (lastUsedSpeaker + 1) % speakers.Length;
 
 		lastMistakeCount = mistakeCount;
 
 		//Debug.Log(value.Replace('<', '{').Replace('>', '}') + " => " + typed.text.Replace('<', '{').Replace('>', '}'));
+	}
+
+	public void PlayTypingSound(bool mistake = false) {
+		if (mistake) {
+			speakers[lastUsedSpeaker].PlayOneShot(AltTypingSounds[UnityEngine.Random.Range(0, AltTypingSounds.Length - 1)]);
+		} else {
+			speakers[lastUsedSpeaker].PlayOneShot(TypingSounds[UnityEngine.Random.Range(0, TypingSounds.Length - 1)]);
+		}
+
+		lastUsedSpeaker = (lastUsedSpeaker + 1) % speakers.Length;
 	}
 }

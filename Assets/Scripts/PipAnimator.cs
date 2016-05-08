@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System;
 
 public class PipAnimator : MonoBehaviour {
 
 	[SerializeField] CameraAnimator m_CameraAnimator;
+	[SerializeField] Image m_PipBackground;
 	RectTransform m_RectTransform;
 	Vector2 TargetPosition;
 	Vector2 OffscreenPosition;
@@ -42,8 +44,10 @@ public class PipAnimator : MonoBehaviour {
 
 	public void ToggleBigdog(bool state) {
 		if (state) {
+			m_PipBackground.gameObject.SetActive(false);
 			m_RectTransform.localScale = BigScale;
 		} else {
+			m_PipBackground.gameObject.SetActive(true);
 			m_RectTransform.localScale = OriginalScale;
 		}
 	}
