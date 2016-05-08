@@ -148,8 +148,8 @@ public class GameState : MonoBehaviour {
 		});
 
 		yield return dogBarker.Play(0.25f, new[] {
-			"just type what's on screen and try not to hit extra keys with your paws,",
-			"i do that all teh time. dont worry."
+			"just type what's on the screen and try not to hit extra keys",
+			"with your paws, i do that all teh time. dont worry."
 		});
 	}
 
