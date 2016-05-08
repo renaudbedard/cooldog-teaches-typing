@@ -99,6 +99,7 @@ MonoBehaviour:
   - {fileID: 0}
   m_CooldogPip: {fileID: 0}
   m_CamAnimator: {fileID: 11476654}
+  LogoAnimator: {fileID: 0}
   m_UILayer: {fileID: 0}
   Lessons:
   - Name: typing basics

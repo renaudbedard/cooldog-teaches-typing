@@ -23,6 +23,8 @@ public class GameState : MonoBehaviour {
 	public PipAnimator m_CooldogPip;
 	public CameraAnimator m_CamAnimator;
 
+	public LogoAnimator LogoAnimator;
+
 	public UIParts m_UILayer;
 
 	public Lesson[] Lessons;
@@ -57,6 +59,8 @@ public class GameState : MonoBehaviour {
 			}
 			break;
 		case 1:
+			LogoAnimator.FadeOutSong();
+
 			IntroTransition = StateOneTransition();
 			StartCoroutine(IntroTransition);
 			CurrentState = 2;
