@@ -81,6 +81,8 @@ class ScreenTyping : MonoBehaviour
 	public bool BootedUp;
 	public IEnumerator BootUp()
 	{
+		BootedUp = true;
+
 		yield return new WaitForSeconds(1.0f);
 
 		var c = LoadingScreen.color;
@@ -106,8 +108,6 @@ class ScreenTyping : MonoBehaviour
 		yield return new WaitForSeconds(0.25f);
 		LoadingScreen.color = new Color(LoadingScreen.color.r, LoadingScreen.color.g, LoadingScreen.color.b, 0f);
 		yield return new WaitForSeconds(1.0f);
-
-		BootedUp = true;
 
 		LoadLesson("lesson1");
 		GetComponentInChildren<InputField>().Select();
