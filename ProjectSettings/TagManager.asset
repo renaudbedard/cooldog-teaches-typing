@@ -38,9 +38,15 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: Default
-    uniqueID: 0
+  - name: Scenary
+    uniqueID: 1329013387
     locked: 0
   - name: Particles
     uniqueID: 947840755
+    locked: 0
+  - name: Foreground
+    uniqueID: 3302866543
+    locked: 0
+  - name: Default
+    uniqueID: 0
     locked: 0
