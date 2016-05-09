@@ -140,7 +140,7 @@ MonoBehaviour:
     Position: {x: 0, y: -9.08, z: -0.33}
     Pitch: 17.3877
     TransitionDuration: 0.5
-  StartPosition: {x: 0, y: 83.2, z: -60.3}
+  StartPosition: {x: 0, y: 83.2, z: -56.19}
   CurrentViewpoint: 1
 --- !u!124 &12446298
 Behaviour:

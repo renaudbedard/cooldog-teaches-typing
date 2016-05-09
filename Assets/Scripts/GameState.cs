@@ -61,8 +61,8 @@ public class GameState : MonoBehaviour {
 	}
 
 	// Use this for initialization
-	void Start ()
-	{
+	void Start () {
+		m_UILayer.gameObject.SetActive(true);
 		updateLesson();
 	}
 
