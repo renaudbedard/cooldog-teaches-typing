@@ -89,11 +89,6 @@ NavMeshSettings:
 GameObject:
   m_PrefabParentObject: {fileID: 190310, guid: 8700a87ca1c42479d8a34dfe17968368, type: 2}
   m_PrefabInternal: {fileID: 847218218}
---- !u!20 &127657123 stripped
-Camera:
-  m_PrefabParentObject: {fileID: 2062916, guid: 51d328ba4b6b24e17bd27aac8524c9d9,
-    type: 2}
-  m_PrefabInternal: {fileID: 1743196934}
 --- !u!114 &180640024 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 11456636, guid: 5c81d8aeb16a7d941aaa67604c699f21,
@@ -322,10 +317,6 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 11416454, guid: 8700a87ca1c42479d8a34dfe17968368, type: 2}
-      propertyPath: m_RenderCam
-      value: 
-      objectReference: {fileID: 127657123}
     - target: {fileID: 11449000, guid: 8700a87ca1c42479d8a34dfe17968368, type: 2}
       propertyPath: m_CameraAnimator
       value: 

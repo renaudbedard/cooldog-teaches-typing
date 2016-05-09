@@ -49,12 +49,12 @@ Camera:
   field of view: 38.8
   orthographic: 0
   orthographic size: 5
-  m_Depth: -1
+  m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 256
   m_RenderingPath: -1
-  m_TargetTexture: {fileID: 0}
+  m_TargetTexture: {fileID: 8400000, guid: 8eec99a103afb9944a507f9103836845, type: 2}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 0

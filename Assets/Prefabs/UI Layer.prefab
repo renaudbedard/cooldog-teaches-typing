@@ -94,7 +94,6 @@ GameObject:
   - 224: {fileID: 22452024}
   - 222: {fileID: 22265486}
   - 114: {fileID: 11436476}
-  - 114: {fileID: 11416454}
   m_Layer: 5
   m_Name: PIP
   m_TagString: Untagged
@@ -518,20 +517,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: PRESS ANY KEY
---- !u!114 &11416454
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 124888}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: acfe82e13a6bf43f68679f11785264cc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_RenderCam: {fileID: 0}
-  m_RenderTexture: {fileID: 0}
-  m_Smalldog: {fileID: 2100000, guid: a9e868087fd3443cbafb1781891b7a5e, type: 2}
 --- !u!114 &11424220
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -605,7 +590,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Texture: {fileID: 0}
+  m_Texture: {fileID: 8400000, guid: 8eec99a103afb9944a507f9103836845, type: 2}
   m_UVRect:
     serializedVersion: 2
     x: 0
