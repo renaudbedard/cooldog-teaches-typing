@@ -155,20 +155,18 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: 407dc0e964d6a4d45ae653e708a31982, type: 3}
-    m_FontSize: 14
+    m_FontSize: 16
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
-    m_MaxSize: 40
+    m_MaxSize: 300
     m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 3
-  m_Text: '
-
-'
+  m_Text: 
 --- !u!114 &11429004
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -210,11 +208,11 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 14
-    m_FontStyle: 2
+    m_Font: {fileID: 12800000, guid: 407dc0e964d6a4d45ae653e708a31982, type: 3}
+    m_FontSize: 16
+    m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
+    m_MinSize: 1
     m_MaxSize: 40
     m_Alignment: 0
     m_AlignByGeometry: 0
@@ -353,67 +351,67 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Reference: {fileID: 11415912}
   LoadingScreen: {fileID: 11443264}
+  lastMistakeCount: 0
   TypingSounds:
-  - {fileID: 8300000, guid: c090f3206e7a24a4eb6805e736346ef2, type: 3}
-  - {fileID: 8300000, guid: ac3dfd52379c32544b03e47a9fa53adc, type: 3}
-  - {fileID: 8300000, guid: 69c23b92d5897854f98028edcb6640b4, type: 3}
-  - {fileID: 8300000, guid: acdd68e22eb3d554087137c17ec21812, type: 3}
-  - {fileID: 8300000, guid: 7a57f164cb5e6a141ba049c6623e1d23, type: 3}
-  - {fileID: 8300000, guid: 07df2464020dfc348a2bb18c3bb8cfa5, type: 3}
-  - {fileID: 8300000, guid: 0ae0c407479c90b45a36bd9702441c63, type: 3}
-  - {fileID: 8300000, guid: 58d51257139acc443ad4107ef66df7ca, type: 3}
-  - {fileID: 8300000, guid: e9b37477287a89643ad315381ae64863, type: 3}
-  - {fileID: 8300000, guid: 2f4fd7877b18ac14b8c82f1899fe5a54, type: 3}
-  - {fileID: 8300000, guid: 11812e89a952d9646a5e18a43773dcab, type: 3}
-  - {fileID: 8300000, guid: f8f05dd9af6b4514592c8e290368cb4f, type: 3}
-  - {fileID: 8300000, guid: e3dab1bb222bbd841b7e37753b2d49d2, type: 3}
-  - {fileID: 8300000, guid: c10a737c04205344588fd824fde35dad, type: 3}
-  - {fileID: 8300000, guid: ae5e443d3c08f57419dbcf84f2185417, type: 3}
-  - {fileID: 8300000, guid: 3f44488d46e46e64ab6bcb8efa207487, type: 3}
-  - {fileID: 8300000, guid: 6888fcdddacf3c64abebb50ff8d9cea6, type: 3}
-  - {fileID: 8300000, guid: abb7a0fd49eb6be4e98241711a536984, type: 3}
-  - {fileID: 8300000, guid: b47dd18fd4124964b9c86f2960ae1395, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   AltTypingSounds:
-  - {fileID: 8300000, guid: d98270507e859764ea61dcd7d6b79919, type: 3}
-  - {fileID: 8300000, guid: 08ea83d0e290eee418ae03f465282ec8, type: 3}
-  - {fileID: 8300000, guid: 10ccbaf0b0f5dd9418e1ecf8ec28ea90, type: 3}
-  - {fileID: 8300000, guid: f910e5a1474cd934785ac50d55f97736, type: 3}
-  - {fileID: 8300000, guid: 6a9a29c1130dbc24bb428bbb71112a98, type: 3}
-  - {fileID: 8300000, guid: 043e64a3402ac1040a16fcc6975e0c81, type: 3}
-  - {fileID: 8300000, guid: d8533114d471b0c42a68cdc687979e51, type: 3}
-  - {fileID: 8300000, guid: 0855f2346fc232543922652fd76a48b5, type: 3}
-  - {fileID: 8300000, guid: dee184840fb34874c92aa484fdde97e9, type: 3}
-  - {fileID: 8300000, guid: c2b1b5947e1c621409f391e83b568c33, type: 3}
-  - {fileID: 8300000, guid: 68a6ac9440781f644ba0940a70fedf84, type: 3}
-  - {fileID: 8300000, guid: e862d6f4222e6d144bf8aa33498ddc56, type: 3}
-  - {fileID: 8300000, guid: 67f72f45f4b053748991409ecdcb05f7, type: 3}
-  - {fileID: 8300000, guid: 33c212f50ab11c949bc3ad31ce1e1083, type: 3}
-  - {fileID: 8300000, guid: df304767ae6ead34f9d037901a9ebe30, type: 3}
-  - {fileID: 8300000, guid: 54c7c7f77da8ba4448a3e6a24c44515c, type: 3}
-  - {fileID: 8300000, guid: d293b3287f0703649aae98ffd31390ab, type: 3}
-  - {fileID: 8300000, guid: 207006285a31dbf47a56565b685b9a5c, type: 3}
-  - {fileID: 8300000, guid: c1705a58d47d2524cb98a606cf413b98, type: 3}
-  - {fileID: 8300000, guid: bb53a898c1afb5e4680bb201c582f946, type: 3}
-  - {fileID: 8300000, guid: 9e5eb998adc9a4144b738a44d0a05153, type: 3}
-  - {fileID: 8300000, guid: 60364839248a2274cbbe0ea8f3bf9872, type: 3}
-  - {fileID: 8300000, guid: 723b479b0cce22246ba59c9f738d6529, type: 3}
-  - {fileID: 8300000, guid: 38bd30dbb5aa2ba4bba8f47a78694820, type: 3}
-  - {fileID: 8300000, guid: a2379b7c1d9368644bb8ce0a5205b903, type: 3}
-  - {fileID: 8300000, guid: a402b0cc446beee46926787a643ef041, type: 3}
-  - {fileID: 8300000, guid: 3e8b163d994d4e045a02ccc81ef7f5ac, type: 3}
-  - {fileID: 8300000, guid: 3221184d20e092b498744d71b029b0a2, type: 3}
-  - {fileID: 8300000, guid: 1a71866d569957142a9f2ec8e0a6938f, type: 3}
-  - {fileID: 8300000, guid: f18d579dc4adbc34983ad598f754703f, type: 3}
-  - {fileID: 8300000, guid: 052b42fd4488cb544a8fc1b913ed53ac, type: 3}
-  - {fileID: 8300000, guid: 59e2dd4e7b4f79e42b990ea74e6e6529, type: 3}
-  - {fileID: 8300000, guid: dfe8c06e38d06d5418c86d4fcbc90d9a, type: 3}
-  - {fileID: 8300000, guid: d6c4946e60e032b4d9fabea2e165102f, type: 3}
-  - {fileID: 8300000, guid: bce1b88e560046a44bb2a7c4148e22f1, type: 3}
-  - {fileID: 8300000, guid: b71b413f905910644b09feb980452dd0, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   TeachesTyping: {fileID: 8300000, guid: 560783987af179d43b27d0e61437b1bd, type: 3}
   Masher: {fileID: 0}
-  Blackboard: {fileID: 0}
-  Strikeline: {fileID: 147742, guid: 58f7d98f7bc4622488d050c07fb7e241, type: 2}
+  NextLesson: 
   BootedUp: 0
 --- !u!114 &11492826
 MonoBehaviour:
@@ -436,7 +434,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: 407dc0e964d6a4d45ae653e708a31982, type: 3}
-    m_FontSize: 14
+    m_FontSize: 16
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 1
@@ -562,8 +560,8 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.03, y: -0}
-  m_SizeDelta: {x: -0.77, y: -0.64}
+  m_AnchoredPosition: {x: -0.000000014901161, y: -0.16}
+  m_SizeDelta: {x: -0.70000005, y: -0.32}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22445602
 RectTransform:
@@ -581,8 +579,8 @@ RectTransform:
   m_RootOrder: 1
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.030001154, y: 0.55}
-  m_SizeDelta: {x: -0.77, y: -3.29}
+  m_AnchoredPosition: {x: 0, y: 0.55}
+  m_SizeDelta: {x: -0.7, y: -3.29}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22449928
 RectTransform:
@@ -652,8 +650,8 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.06999999, y: 0.3}
-  m_SizeDelta: {x: 20.73, y: 8.73}
+  m_AnchoredPosition: {x: -0, y: 0.3}
+  m_SizeDelta: {x: 21, y: 9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &100100000
 Prefab:

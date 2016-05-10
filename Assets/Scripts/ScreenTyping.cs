@@ -197,6 +197,8 @@ class ScreenTyping : MonoBehaviour
 			value = value.Substring(0, value.LastIndexOf("<color", StringComparison.InvariantCulture));
 		// no tabs!
 		value = value.Replace("\t", "");
+		//value = value.Replace("\n", "");
+		//value = value.Replace("\r", "");
 
 		// split lines
 		textGenerator.Populate(value, settings);

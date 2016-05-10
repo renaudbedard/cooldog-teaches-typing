@@ -31,18 +31,8 @@ public class GameState : MonoBehaviour {
 
 	public Lesson[] Lessons;
 
-	public Func<IEnumerator>[] LessonStartCoroutine = new Func<IEnumerator>[]
-	{
-		LessonOneStart,
-		LessonTwoStart,
-		LessonThreeStart
-	};
-	public Func<IEnumerator>[] LessonEndCoroutine = new Func<IEnumerator>[]
-	{
-		LessonOneEnd,
-		LessonTwoEnd,
-		LessonThreeEnd
-	};
+	public Func<IEnumerator>[] LessonStartCoroutine;
+	public Func<IEnumerator>[] LessonEndCoroutine;
 
 	public int currentLesson;
 
@@ -51,6 +41,17 @@ public class GameState : MonoBehaviour {
 
 	void Awake() {
 		Instance = this;
+		LessonStartCoroutine = new Func<IEnumerator>[] {
+			LessonOneStart,
+			LessonTwoStart,
+			LessonThreeStart
+		};
+
+		LessonEndCoroutine = new Func<IEnumerator>[] {
+			LessonOneEnd,
+			LessonTwoEnd,
+			LessonThreeEnd
+		};
 	}
 
 	public int CurrentState = 0;
@@ -76,13 +77,16 @@ public class GameState : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		// Ctrl + R to restart the game.
 		if (Input.GetKeyDown(KeyCode.R) && Input.GetKey(KeyCode.LeftControl)) {
 			int scene = SceneManager.GetActiveScene().buildIndex;
 			SceneManager.LoadScene(scene, LoadSceneMode.Single);
 			CurrentState = 0;
 		}
+
+		// Some awful state manager thing...
 		switch(CurrentState) {
-		case 0:
+		case 0: // Game start. Wait for keypress.
 			m_UILayer.m_PressStart.SetAlpha((int)Time.time % 2);
 			if (Input.anyKeyDown && !Input.GetMouseButton(0) && !Input.GetMouseButton(1)) {
 				ScreenTyping.Instance.PlayTypingSound(true);
@@ -93,11 +97,12 @@ public class GameState : MonoBehaviour {
 			LogoAnimator.FadeOutSong();
 
 			IntroTransition = StateOneTransition();
-			StartCoroutine(IntroTransition);
+			StartCoroutine(IntroTransition); // Kick off the intro
 			CurrentState = 2;
 			break;
 		case 2:
 			// Skip intro on keypress ~
+			// Otherwise just wait forever
 			if (Input.GetKeyDown(KeyCode.Escape)) {
 				StopCoroutine(IntroTransition);
 				SetIntroRenderersAlpha( 0f );
@@ -106,11 +111,15 @@ public class GameState : MonoBehaviour {
 				CurrentState = 3;
 			}
 			break;
-		default:
+		case 3: // Waiting to start scene.
 			if (Input.GetKeyDown("up"))
 				m_CamAnimator.CurrentViewpoint = Mathf.Max(m_CamAnimator.CurrentViewpoint - 1, 0);
 			if (Input.GetKeyDown("down"))
 				m_CamAnimator.CurrentViewpoint = Mathf.Min(m_CamAnimator.CurrentViewpoint + 1, m_CamAnimator.Viewpoints.Length - 1);
+
+			if ( m_CamAnimator.CurrentViewpoint == 3 ) {
+				CurrentState = 4;
+			}
 			break;
 		}
 	}
@@ -134,15 +143,13 @@ public class GameState : MonoBehaviour {
 		CurrentState = 3;
 	}
 
-	public void EndLesson()
-	{
+	public void EndLesson() {
 		StartCoroutine(LessonEndCoroutine[currentLesson]());
 		currentLesson++;
 		updateLesson();
 	}
 
-	public void StartLesson()
-	{
+	public void StartLesson() {
 		StartCoroutine(LessonStartCoroutine[currentLesson]());
 	}
 
@@ -160,8 +167,7 @@ public class GameState : MonoBehaviour {
 		});
 	}
 
-	static IEnumerator LessonTwoStart()
-	{
+	IEnumerator LessonTwoStart() {
 		var dogBarker = Cooldog.Instance.GetComponent<DogBarker>();
 
 		yield return dogBarker.Play(0f, new[] {
@@ -173,8 +179,7 @@ public class GameState : MonoBehaviour {
 		});
 	}
 
-	static IEnumerator LessonThreeStart()
-	{
+	IEnumerator LessonThreeStart() {
 		var dogBarker = Cooldog.Instance.GetComponent<DogBarker>();
 
 		yield return dogBarker.Play(0f, new[] {
@@ -183,8 +188,7 @@ public class GameState : MonoBehaviour {
 		});
 	}
 
-	static IEnumerator LessonOneEnd()
-	{
+	IEnumerator LessonOneEnd() {
 		var dogBarker = Cooldog.Instance.GetComponent<DogBarker>();
 
 		yield return new WaitForSeconds(0.5f);
@@ -203,10 +207,11 @@ public class GameState : MonoBehaviour {
 		yield return dogBarker.Play(0.25f, new [] {
 			"dont worry youll get better if you do more lessons."
 		});
+
+		CurrentState = 3;
 	}
 
-	static IEnumerator LessonTwoEnd()
-	{
+	IEnumerator LessonTwoEnd() {
 		var dogBarker = Cooldog.Instance.GetComponent<DogBarker>();
 
 		yield return new WaitForSeconds(0.5f);
@@ -225,10 +230,11 @@ public class GameState : MonoBehaviour {
 		yield return dogBarker.Play(0.25f, new[] {
 			"how about you put those typing skills to the test and help me look some stuff up."
 		});
+
+		CurrentState = 3;
 	}
 
-	static IEnumerator LessonThreeEnd()
-	{
+	IEnumerator LessonThreeEnd() {
 		var dogBarker = Cooldog.Instance.GetComponent<DogBarker>();
 
 		yield return new WaitForSeconds(0.5f);
@@ -248,6 +254,8 @@ public class GameState : MonoBehaviour {
 
 		yield return dogBarker.Play(0.25f, new[] {
 			"i hope you enjoyed your stay and you learned cool facts. ill see you later"
-		});	
+		});
+
+		CurrentState = 3;
 	}
 }
