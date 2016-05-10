@@ -103,7 +103,7 @@ public class GameState : MonoBehaviour {
 		case 2:
 			// Skip intro on keypress ~
 			// Otherwise just wait forever
-			if (Input.GetKeyDown(KeyCode.Escape)) {
+			if (Input.GetKeyDown(KeyCode.F1)) {
 				StopCoroutine(IntroTransition);
 				SetIntroRenderersAlpha( 0f );
 				if (IntroRoutine != null)
@@ -127,6 +127,9 @@ public class GameState : MonoBehaviour {
 			if (Input.GetKeyDown("down"))
 				m_CamAnimator.CurrentViewpoint = Mathf.Min(m_CamAnimator.CurrentViewpoint + 1, m_CamAnimator.Viewpoints.Length - 1);
 			break;
+		}
+		if ( Input.GetKeyDown(KeyCode.Escape) ) {
+			Application.Quit();
 		}
 	}
 
