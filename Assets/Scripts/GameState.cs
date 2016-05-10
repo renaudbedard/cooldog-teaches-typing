@@ -121,6 +121,12 @@ public class GameState : MonoBehaviour {
 				CurrentState = 4;
 			}
 			break;
+		case 4:
+			if (Input.GetKeyDown("up"))
+				m_CamAnimator.CurrentViewpoint = Mathf.Max(m_CamAnimator.CurrentViewpoint - 1, 2);
+			if (Input.GetKeyDown("down"))
+				m_CamAnimator.CurrentViewpoint = Mathf.Min(m_CamAnimator.CurrentViewpoint + 1, m_CamAnimator.Viewpoints.Length - 1);
+			break;
 		}
 	}
 
@@ -144,6 +150,7 @@ public class GameState : MonoBehaviour {
 	}
 
 	public void EndLesson() {
+		CurrentState = 5;
 		StartCoroutine(LessonEndCoroutine[currentLesson]());
 		currentLesson++;
 		updateLesson();

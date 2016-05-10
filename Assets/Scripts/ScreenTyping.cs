@@ -321,8 +321,7 @@ class ScreenTyping : MonoBehaviour
 
 		lastMistakeCount = mistakeCount;
 
-		if (done)
-		{
+		if (done) {
 			enabled = false;
 			GameState.Instance.EndLesson();
 		}
