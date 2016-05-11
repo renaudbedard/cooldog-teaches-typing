@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Runtime.InteropServices;
 
 public class OutboundLinks : MonoBehaviour {
 
@@ -12,6 +13,15 @@ public class OutboundLinks : MonoBehaviour {
 	};
 
 	public void ClickLink(int id) {
+		#if UNITY_WEBGL
+		openWindow(twitters[id]);
+		#else
 		Application.OpenURL( twitters[id] );
+		#endif
 	}
+
+	#if UNITY_WEBGL
+	[DllImport("__Internal")]
+	private static extern void openWindow(string url);
+	#endif
 }
