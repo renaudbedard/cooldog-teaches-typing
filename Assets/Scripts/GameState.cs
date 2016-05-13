@@ -127,11 +127,9 @@ public class GameState : MonoBehaviour {
 			break;
 		case 3: // Waiting to start scene.
 			if ( Input.GetKeyDown("up") ) {
-				LessonStartInputWait = Time.time;
 				m_CamAnimator.CurrentViewpoint = Mathf.Max(m_CamAnimator.CurrentViewpoint - 1, 0);
 			}
 			if ( Input.GetKeyDown("down") ) {
-				LessonStartInputWait = Time.time;
 				m_CamAnimator.CurrentViewpoint = Mathf.Min(m_CamAnimator.CurrentViewpoint + 1, m_CamAnimator.Viewpoints.Length - 1);
 			}
 
@@ -151,6 +149,7 @@ public class GameState : MonoBehaviour {
 				m_CamAnimator.CurrentViewpoint = Mathf.Max(m_CamAnimator.CurrentViewpoint - 1, 2);
 			if (Input.GetKeyDown("down"))
 				m_CamAnimator.CurrentViewpoint = Mathf.Min(m_CamAnimator.CurrentViewpoint + 1, m_CamAnimator.Viewpoints.Length - 1);
+			LessonStartInputWait = Time.time;
 			break;
 		}
 		if ( Input.GetKeyDown(KeyCode.Escape) ) {
@@ -175,8 +174,8 @@ public class GameState : MonoBehaviour {
 		IntroRoutine =  m_Intro.Play();
 		yield return StartCoroutine( IntroRoutine );
 
-		CurrentState = 3;
 		LessonStartInputWait = Time.time;
+		CurrentState = 3;
 	}
 
 	public void EndLesson() {
@@ -241,6 +240,7 @@ public class GameState : MonoBehaviour {
 			"dont worry youll get better if you do more lessons."
 		});
 
+		LessonStartInputWait = Time.time + 10f;
 		CurrentState = 3;
 	}
 
@@ -264,6 +264,7 @@ public class GameState : MonoBehaviour {
 			"how about you put those typing skills to the test and help me look some stuff up."
 		});
 
+		LessonStartInputWait = Time.time + 10f;
 		CurrentState = 3;
 	}
 
@@ -278,8 +279,6 @@ public class GameState : MonoBehaviour {
 		yield return new WaitForSeconds(1.0f);
 
 		ScreenTyping.Instance.ShutDown();
-
-		// TODO: GAME END DIALOG
 
 		yield return dogBarker.Play(0f, new[] {
 			"here we are. youre now a typing legend just like me.",

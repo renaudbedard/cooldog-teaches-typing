@@ -16,24 +16,28 @@ public class LogoAnimator : MonoBehaviour
 
 	AudioSource song;
 
-	bool shownCooldog;
-	bool shownTeaches;
+	bool shownCooldog = false;
+	bool shownTeaches = false;
 
 	bool fadingOut;
 
-	void Awake()
-	{
+	void Awake() {
 		cooldog = transform.FindChild("Cooldog");
 		teachesTyping = transform.FindChild("Teaches Typing");
 
 		song = GetComponent<AudioSource>();
-
-		foreach (var r in GetComponentsInChildren<CanvasRenderer>())
-			r.SetAlpha(0);
+		song.time = 0;
 	}
 
-	public void FadeOutSong()
-	{
+	void Start() {
+		foreach ( CanvasRenderer r in GetComponentsInChildren<CanvasRenderer>() ) {
+			r.SetAlpha(0);
+		}
+
+		song.PlayDelayed(0.5f);
+	}
+
+	public void FadeOutSong() {
 		fadingOut = true;
 	}
 
@@ -41,8 +45,9 @@ public class LogoAnimator : MonoBehaviour
 	float lastAngle;
 	int lastFrame = 1;
 
-	void Update()
-	{
+	void Update() {
+		if ( !song.isPlaying ) { return; }
+
 		var beat = (int)(song.time / 0.3f);
 		int frame = beat % 2;
 
