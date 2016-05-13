@@ -36,8 +36,21 @@ public class GameState : MonoBehaviour {
 
 	public int currentLesson;
 
+	[SerializeField] float betweenLessonWait = 15f;
+	float LessonStartInputWait = 0f;
+
 	public Canvas Blackboard;
-	public GameObject Strikeline;
+	public GameObject[] BlackboardLines;
+
+	public DogBarker dogBarker;
+
+	string[] idleLines = new string[] {
+		"press down to do a lesson",
+		"down is the one with the arrow on it",
+		"you are a very quiet typer",
+		"if you dont want to type, at least give me a scratchin"
+	};
+	int lastIdle = 0;
 
 	void Awake() {
 		Instance = this;
@@ -56,14 +69,14 @@ public class GameState : MonoBehaviour {
 
 	public int CurrentState = 0;
 
-	void Restart() {
-		CurrentState = 0;
-		currentLesson = 0;
-	}
-
 	// Use this for initialization
 	void Start () {
 		m_UILayer.gameObject.SetActive(true);
+		dogBarker = Cooldog.Instance.GetComponent<DogBarker>();
+		foreach (GameObject g in BlackboardLines) {
+			g.SetActive(false);
+		}
+		currentLesson = 0;
 		updateLesson();
 	}
 
@@ -101,24 +114,36 @@ public class GameState : MonoBehaviour {
 			CurrentState = 2;
 			break;
 		case 2:
-			// Skip intro on keypress ~
+			// Skip intro on keypress F1 (can cause buggy UI state)
 			// Otherwise just wait forever
 			if (Input.GetKeyDown(KeyCode.F1)) {
 				StopCoroutine(IntroTransition);
 				SetIntroRenderersAlpha( 0f );
 				if (IntroRoutine != null)
 					StopCoroutine( IntroRoutine );
+				LessonStartInputWait = Time.time;
 				CurrentState = 3;
 			}
 			break;
 		case 3: // Waiting to start scene.
-			if (Input.GetKeyDown("up"))
+			if ( Input.GetKeyDown("up") ) {
+				LessonStartInputWait = Time.time;
 				m_CamAnimator.CurrentViewpoint = Mathf.Max(m_CamAnimator.CurrentViewpoint - 1, 0);
-			if (Input.GetKeyDown("down"))
+			}
+			if ( Input.GetKeyDown("down") ) {
+				LessonStartInputWait = Time.time;
 				m_CamAnimator.CurrentViewpoint = Mathf.Min(m_CamAnimator.CurrentViewpoint + 1, m_CamAnimator.Viewpoints.Length - 1);
+			}
 
 			if ( m_CamAnimator.CurrentViewpoint == 3 ) {
 				CurrentState = 4;
+			}
+
+			// Idle lines
+			if ( m_CamAnimator.CurrentViewpoint == 2 && LessonStartInputWait + betweenLessonWait < Time.time ) {
+				LessonStartInputWait = Time.time;
+				StartCoroutine( dogBarker.Play(0f, idleLines[lastIdle]) );
+				lastIdle = ( lastIdle > idleLines.Length - 2 ) ? 0 : lastIdle + 1;
 			}
 			break;
 		case 4:
@@ -149,7 +174,9 @@ public class GameState : MonoBehaviour {
 		m_Intro = new IntroScene();
 		IntroRoutine =  m_Intro.Play();
 		yield return StartCoroutine( IntroRoutine );
+
 		CurrentState = 3;
+		LessonStartInputWait = Time.time;
 	}
 
 	public void EndLesson() {
@@ -178,8 +205,6 @@ public class GameState : MonoBehaviour {
 	}
 
 	IEnumerator LessonTwoStart() {
-		var dogBarker = Cooldog.Instance.GetComponent<DogBarker>();
-
 		yield return dogBarker.Play(0f, new[] {
 			"another lesson coming right up. this time we focus on the middle homerow of the keyboard."
 		});
@@ -190,8 +215,6 @@ public class GameState : MonoBehaviour {
 	}
 
 	IEnumerator LessonThreeStart() {
-		var dogBarker = Cooldog.Instance.GetComponent<DogBarker>();
-
 		yield return dogBarker.Play(0f, new[] {
 			"alright. after that last lesson i had some computer questions to search.",
 			"help me go through my notes."
@@ -199,7 +222,7 @@ public class GameState : MonoBehaviour {
 	}
 
 	IEnumerator LessonOneEnd() {
-		var dogBarker = Cooldog.Instance.GetComponent<DogBarker>();
+		BlackboardLines[0].SetActive(true);
 
 		yield return new WaitForSeconds(0.5f);
 
@@ -222,7 +245,7 @@ public class GameState : MonoBehaviour {
 	}
 
 	IEnumerator LessonTwoEnd() {
-		var dogBarker = Cooldog.Instance.GetComponent<DogBarker>();
+		BlackboardLines[1].SetActive(true);
 
 		yield return new WaitForSeconds(0.5f);
 
@@ -245,7 +268,7 @@ public class GameState : MonoBehaviour {
 	}
 
 	IEnumerator LessonThreeEnd() {
-		var dogBarker = Cooldog.Instance.GetComponent<DogBarker>();
+		BlackboardLines[2].SetActive(true);
 
 		yield return new WaitForSeconds(0.5f);
 
@@ -259,13 +282,16 @@ public class GameState : MonoBehaviour {
 		// TODO: GAME END DIALOG
 
 		yield return dogBarker.Play(0f, new[] {
-			"here we are. youre now a typing legend just like me."
+			"here we are. youre now a typing legend just like me.",
+			"goodbye for now"
 		});
 
-		yield return dogBarker.Play(0.25f, new[] {
-			"i hope you enjoyed your stay and you learned cool facts. ill see you later"
-		});
+		Instance.m_CamAnimator.CurrentViewpoint = 1;
 
-		CurrentState = 3;
+		yield return new WaitForSeconds(3f);
+
+		int scene = SceneManager.GetActiveScene().buildIndex;
+		SceneManager.LoadScene(scene, LoadSceneMode.Single);
+		CurrentState = 0;
 	}
 }

@@ -109,8 +109,13 @@ MonoBehaviour:
   - Name: reseach review
     Path: lesson3
   currentLesson: 0
+  betweenLessonWait: 11
   Blackboard: {fileID: 0}
-  Strikeline: {fileID: 147742, guid: 58f7d98f7bc4622488d050c07fb7e241, type: 2}
+  BlackboardLines:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  dogBarker: {fileID: 0}
   CurrentState: 0
 --- !u!114 &11476654
 MonoBehaviour:
